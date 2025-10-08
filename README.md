@@ -2,6 +2,7 @@
 
 ```markdown
 ### Directory Structure
+---
 ```bash
 .
 ├── prompts/                    # Prompts for each application
