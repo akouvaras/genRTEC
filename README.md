@@ -13,13 +13,12 @@
 │   ├── 07_ctm.txt
 │   └── 08_cg.txt
 │
-└── rules/                      # Includes hand-crafted (folder: rtec) and LLM-generated rules (folder: llms). 
-    └── llms/                   # Includes rule-sets for claude, gemini, gpt, qwen. 
+└── rules/                      # Includes hand-crafted (folder: rtec) and LLM-generated rule sets (folder: llms)
+    └── llms/                   # Includes rule sets for Claude, Gemini, GPT, and Qwen
         └── claude/
-            └── exp1/           # For each experiment there are two folders i.e., predictive_accuracy, syntactic_similarity. 
-                ├── predictive_accuracy/     # Rules that one need in order to reasoning and compute predictive accuracy using [RTEC](https://github.com/aartikis/rtec). 
-                └── syntactic_similarity/    # Rules that one need in order to compute syntactic similarity using [simLP](https://github.com/Periklismant/simLP). 
-...
+            └── exp1/           # Each experiment contains two folders: predictive_accuracy and syntactic_similarity
+                ├── predictive_accuracy/     # Rules needed for reasoning and computing predictive accuracy using [RTEC](https://github.com/aartikis/rtec)
+                └── syntactic_similarity/    # Rules needed for computing syntactic similarity using [simLP](https://github.com/Periklismant/simLP)
 
 # License
 
