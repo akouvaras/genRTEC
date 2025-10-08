@@ -1,6 +1,7 @@
 # genRTEC: A prompting approach that leverages the power of LLMs for constructing executable MAS specifications.
 
 ### Directory Structure
+```bash
 .
 ├── prompts/                    # Prompts for each application
 │   ├── 01_introducing_rtec.txt
@@ -18,7 +19,7 @@
             └── exp1/           # For each experiment there are two folders i.e., predictive_accuracy, syntactic_similarity. 
                 ├── predictive_accuracy/     # Rules that one need in order to reasoning and compute predictive accuracy using [RTEC](https://github.com/aartikis/rtec). 
                 └── syntactic_similarity/    # Rules that one need in order to compute syntactic similarity using [simLP](https://github.com/Periklismant/simLP). 
-
+...
 
 # License
 
