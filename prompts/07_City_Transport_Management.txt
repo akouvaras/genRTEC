@@ -1,0 +1,146 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Prompt CTM:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Now, will start with the generation of the composite activity definitions for city transport management (CTM). First, we will present the events and input fluents. Second, we will provide the composite activity definitions in natural language and ask for their specification in the language of RTEC. In these specifications, you may use any of the built-in events of RTEC, as well as the CTM events and fluents. 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Prompt CTM-Events:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+In addition to the built-in events of RTEC, you may use the following CTM events:
+
+CTM - Event 1: stop_enter(Id, VehicleType,StopCode,early)
+Meaning: A vehicle with an “Id” of type “VehicleType” entered a stop with a “StopCode” earlier than scheduled. 
+
+CTM - Event 2: stop_enter(Id, VehicleType,StopCode,scheduled)
+Meaning: A vehicle with an “Id” of type “VehicleType” entered a stop with a “StopCode” on schedule. 
+
+CTM - Event 3: stop_enter(Id, VehicleType,StopCode,late)
+Meaning: A Vehicle with an “Id” of type “VehicleType” entered a stop with “StopCode” later than scheduled. 
+
+CTM - Event 4: stop_leave(Id, VehicleType,StopCode,early)
+Meaning: A vehicle with an “Id” of type “VehicleType” left a stop with “StopCode” earlier than scheduled. 
+
+CTM - Event 5: stop_leave(Id, VehicleType,StopCode,scheduled)
+Meaning: A vehicle with an “Id” of type “VehicleType” left a stop with “StopCode” on schedule. 
+
+CTM - Event 6: stop_leave(Id, VehicleType,StopCode,late)
+Meaning: A vehicle with an “Id” of type “VehicleType” left a stop with a “StopCode” later than scheduled. 
+
+CTM - Event 7: internal_temperature_change(Id, VehicleType,very_warm)
+Meaning: The internal temperature of a vehicle with an “Id” of type “VehicleType” changed to “very warm”. 
+
+CTM - Event 8: internal_temperature_change(Id, VehicleType,warm)
+Meaning: The internal temperature of a vehicle with an “Id” of type “VehicleType” changed to “warm”. 
+
+CTM - Event 9: internal_temperature_change(Id, VehicleType,normal)
+Meaning: The internal temperature of a vehicle with an “Id” of type “VehicleType” changed to “normal”. 
+
+CTM - Event 10: internal_temperature_change(Id, VehicleType,cold)
+Meaning: The internal temperature of a vehicle with an “Id” of type “VehicleType” changed to “cold”. 
+
+CTM - Event 11: internal_temperature_change(Id, VehicleType,very_cold)
+Meaning: The internal temperature of a vehicle with an “Id” of type “VehicleType” changed to “very cold”. 
+
+CTM - Event 12: noise_level_change(Id, VehicleType,low)
+Meaning: The noise level inside the vehicle with an “Id” of type “VehicleType” changed to “low”. 
+
+CTM - Event 13: noise_level_change(Id, VehicleType,normal)
+Meaning: The noise level inside the vehicle with an “Id” of type “VehicleType” changed to “normal”. 
+
+CTM - Event 14: noise_level_change(Id, VehicleType,high)
+Meaning: The noise level inside the vehicle with an “Id” of type “VehicleType” changed to “high”. 
+
+CTM - Event 15: passenger_density_change(Id, VehicleType,low)
+Meaning: The passenger density inside the vehicle with an “Id” of type “VehicleType” changed to “low”.
+
+CTM - Event 16: passenger_density_change(Id, VehicleType,normal)
+Meaning: The passenger density inside the vehicle with an “Id” of type “VehicleType” changed to “normal”.
+
+CTM - Event 17: passenger_density_change(Id, VehicleType,high)
+Meaning: The passenger density inside the vehicle with an “Id” of type “VehicleType” changed to “high”.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Prompt CTM-Fluents:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+You may also use the following CTM input fluents:
+
+CTM - Input Fluent 1: abrupt_acceleration(Id,VehicleType)=abrupt
+Meaning: A vehicle with “Id” of type “VehicleType” is accelerating “abruptly”. 
+
+CTM - Input Fluent 2: abrupt_acceleration(Id,VehicleType)=very_abrupt
+Meaning: A vehicle with “Id” of type “VehicleType” is accelerating “very abruptly”. 
+
+CTM - Input Fluent 3: abrupt_deceleration(Id,VehicleType)=abrupt
+Meaning: A vehicle with “Id” of type “VehicleType” is decelerating “abruptly”. 
+
+CTM - Input Fluent 4: abrupt_deceleration(Id,VehicleType)=very_abrupt
+Meaning: A vehicle with “Id” of type “VehicleType” is decelerating “very abruptly”.
+
+CTM - Input Fluent 5: sharp_turn(Id,VehicleType)=sharp
+Meaning: A vehicle with “Id” of type “VehicleType” is making a “sharp” turn. 
+
+CTM - Input Fluent 6: sharp_turn(Id,VehicleType)=very_sharp
+Meaning: A vehicle with “Id” of type “VehicleType” is making a “very sharp” turn. 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Prompt CTM - R1: 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Given the description below, provide the rules in the language of RTEC. You may use the built-in events of RTEC, the CTM events, and the CTM input fluents. You may also use any of the CTM output fluents that you have already specified.
+
+Description - "internal_temperature": We aim to determine the internal temperature of a vehicle. The internal temperature of a vehicle starts to be: (1) very warm, (2) warm, (3) normal, (4) cold, or (5) very cold when a corresponding “internal temperature change” is detected. 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Prompt CTM - R2: 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Given the description below, provide the rules in the language of RTEC. You may use the built-in events of RTEC, the CTM events, and the CTM input fluents. You may also use any of the CTM output fluents that you have already learned.
+
+Description - "noise_level": We aim to determine the noise level inside a vehicle. The noise level inside a vehicle starts to be: (1) low, (2) normal, or (3) high when a corresponding “noise level change” is detected. 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Prompt CTM - R3: 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Given the description below, provide the rules in the language of RTEC. You may use the built-in events of RTEC, the CTM events, and the CTM input fluents. You may also use any of the CTM output fluents that you have already specified.
+
+Description - "passenger_density": We aim to determine the passenger density inside a vehicle. The passenger density inside a vehicle starts to be: (1) low, (2) normal, or (3) high when a corresponding “passenger density change” is detected. 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Prompt CTM - R4: 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Given the description below, provide the rules in the language of RTEC. You may use the built-in events of RTEC, the CTM events, and the CTM input fluents. You may also use any of the CTM output fluents that you have already specified.
+
+Description - "punctuality": We aim to assess the punctuality of a vehicle. A vehicle starts to be considered punctual when it enters a stop (1) earlier than planned, or (2) exactly on schedule. A vehicle starts to be considered non-punctual when it (1) enters a stop later than planned, or (2) leaves a stop earlier than scheduled. 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Prompt CTM - R5: 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Given the description below, provide the rules in the language of RTEC. You may use the built-in events of RTEC, the CTM events, and the CTM input fluents. You may also use any of the CTM output fluents that you have already specified.
+
+Description - "driving_style": We aim to assess the driving style of a vehicle. The driving style may be classified as unsafe or uncomfortable. First, the driving style of a vehicle is considered unsafe as long as the vehicle is taking a very sharp turn, or undergoing a very abrupt acceleration or a very abrupt deceleration. Second, the driving style of a vehicle is considered uncomfortable as long as the vehicle is taking a sharp turn without a very abrupt acceleration or deceleration, or when the vehicle accelerates or decelerates abruptly. 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Prompt CTM - R6: 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Given the description below, provide the rules in the language of RTEC. You may use the built-in events of RTEC, the CTM events, and the CTM input fluents. You may also use any of the CTM output fluents that you have already specified.
+
+Description - "driving_quality": We aim to assess the driving quality of a vehicle. The driving quality of a vehicle may be classified as high, medium, or low. First, the driving quality of a vehicle is considered high as long as the vehicle is punctual, while neither an unsafe nor an uncomfortable driving style is in progress. Second, the driving quality of a vehicle is considered medium as long as the vehicle is punctual, but the driving style has dipped to uncomfortable. Third, the driving quality of a vehicle is considered low as long as the vehicle is non-punctual or its driving style is outright unsafe. 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Prompt CTM - R7: 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Given the description below, provide the rules in the language of RTEC. You may use the built-in events of RTEC, the CTM events, and the CTM input fluents. You may also use any of the CTM output fluents that you have already specified.
+
+Description - "passenger_comfort": We aim to assess the passenger’s comfort level inside a vehicle. The passenger’s comfort inside a vehicle is considered to be reducing as long as the vehicle is being driven uncomfortably, the driving style is unsafe, the passenger density is high, the noise level is high, or the internal temperature is very warm or very cold. 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Prompt CTM - R8: 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Given the description below, provide the rules in the language of RTEC. You may use the built-in events of RTEC, the CTM events, and the CTM input fluents. You may also use any of the CTM output fluents that you have already specified.
+
+Description - "driver_comfort": We aim to assess the driver’s comfort level inside a vehicle. The driver’s comfort inside a vehicle is considered to be reducing as long as the vehicle is being driven uncomfortably, the driving style is unsafe, the noise level is high, or the internal temperature is very warm or very cold. 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Prompt CTM - R9:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Given the description below, provide the rules in the language of RTEC. You may use the built-in events of RTEC, the CTM events, and the CTM input fluents. You may also use any of the CTM output fluents that you have already specified.
+
+Description - "passenger_satisfaction": We aim to assess passengers’ satisfaction. Passengers’ satisfaction is considered to be reducing as long as the vehicle is not punctual, or passengers’ comfort is reducing. 

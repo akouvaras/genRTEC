@@ -1,0 +1,86 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Prompt HAR:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Now, we will start with the generation of the composite activity definitions for human activity recognition (HAR). First, we will present the events and input fluents. Second, we will present the predicates expressing the background knowledge. Third, we will provide the composite activity definitions in natural language and ask for their specification in the language of RTEC. In these specifications, you may use any of the built-in events of RTEC, the HAR events and fluents, as well as the HAR background knowledge predicates. 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Prompt HAR-Events:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+In addition to the built-in events of RTEC, you may use the following HAR events:
+
+HAR - Event 1: appear(Id)
+Meaning: “Entity” i.e., a person or an object with  “Id” appeared. 
+
+HAR - Event 2: disappear(Id)
+Meaning: “Entity” i.e., a person or an object with “Id” disappeared. 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Prompt HAR-Fluents:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+You may also use the following HAR input fluents:
+
+HAR - Input Fluent 1: coord(Id,X,Y) = true
+Meaning: “Entity” i.e., a person or an object with “Id” is located at coordinates (X,Y). 
+
+HAR - Input Fluent 2: walking(P) = true
+Meaning: Person “P” is walking. 
+
+HAR - Input Fluent 3: active(P) = true 
+Meaning: Person “P” is active. 
+
+HAR - Input Fluent 4: inactive(P) = true
+Meaning: Person “P” is inactive. 
+
+HAR - Input Fluent 5: running(P) = true
+Meaning: Person “P” is running.
+
+HAR - Input Fluent 6: abrupt(P) = true
+Meaning: Person “P” is moving abruptly.
+
+HAR - Input Fluent 7: person(P) = true
+Meaning: Entity “P” is identified as a person. 
+
+HAR - Input Fluent 8: close(Id1, Id2, DistanceThreshold)=true
+Meaning: Two entities with “Id1” and “Id2” are close to each other, i.e., their distance does not exceed the “DistanceThreshold”. 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Prompt HAR-BK:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+You may also use the following HAR background knowledge predicates. HAR includes predicates named “thresholds” which have two arguments. The first argument refers to the threshold type, and the second one to the threshold value.
+
+HAR Background Knowledge - Predicate 1: thresholds(leavingObject, LeavingObjectThreshold)
+Meaning: “LeavingObjectThreshold” is the maximum distance between a person and an object with respect to leaving an object. 
+
+HAR Background Knowledge - Predicate 2: thresholds(moving, MovingThreshold)
+Meaning: “MovingThreshold” is the maximum distance between two people moving. 
+
+HAR Background Knowledge - Predicate 3: thresholds(fighting, FightingThreshold)
+Meaning: “FightingThreshold” is the maximum distance between two people fighting. 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Prompt HAR-R1:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Given the description below, provide the rules in the language of RTEC. You may use the built-in events of RTEC, the HAR events, the HAR input fluents, and the HAR background knowledge predicates. You may also use any of the HAR output fluents that you have already specified.  
+
+Description - “person”: We aim to determine whether an entity corresponds to a person. An entity starts being considered a person when any of the following conditions are satisfied, provided that the entity has not disappeared from the scene: (1) the entity starts walking, (2) the entity starts running, (3) the entity becomes active, or (4) the entity starts moving abruptly. An entity stops being considered a person when it disappears from the scene. 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Prompt HAR-R2:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Given the description below, provide the rules in the language of RTEC. You may use the built-in events of RTEC, the HAR events, the HAR input fluents, and the HAR background knowledge predicates. You may also use any of the HAR output fluents that you have already specified.  
+
+Description - “leaving_object”: We aim to determine the maximal intervals during which a person leaves an object unattended. A person is said to start leaving an object unattended when the object appears, i.e., the cameras start tracking the object, and at the same time, an entity close to the object has been identified as a person. A person is said to stop leaving an object unattended when the object disappears, i.e., the cameras stop tracking the object. 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Prompt HAR-R3: 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Given the description below, provide the rules in the language of RTEC. You may use the built-in events of RTEC, the HAR events, the HAR input fluents, and the HAR background knowledge predicates. You may also use any of the HAR output fluents that you have already specified.  
+
+Description - “moving”: We aim to identify the maximal intervals during which two people are moving together. This activity lasts as long as two people are walking, and they are relatively close to each other. 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Prompt HAR-R4:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Given the description below, provide the rules in the language of RTEC. You may use the built-in events of RTEC, the HAR events, the HAR input fluents, and the HAR background knowledge predicates. You may also use any of the HAR output fluents that you have already specified. 
+
+Description - “fighting”: We aim to identify the maximal intervals during which two people are fighting. This activity lasts as long as the following conditions are satisfied: (i) two people are close to each other, (ii) at least one of them is moving abruptly, and (iii) the other is not inactive.

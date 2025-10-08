@@ -42,6 +42,9 @@ Meaning: “I” is the list of maximal intervals produced by the intersection o
 RTEC - Predicate 9: relative_complement_all(I',L,I)
 Meaning: “I” is the list of maximal intervals produced by the relative complement of the list of maximal intervals I' with respect to every list of maximal intervals of list “L”.
 
+RTEC - Predicate 10: complement_all(L,I)
+Meaning: “I” is the list of maximal intervals produced by the complement of the list of maximal intervals of list “L”. 
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 Prompt RTEC-4:
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

@@ -1,0 +1,88 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Prompt CG:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Now, we will start with the specification of the clinical guidelines’ (CG) application. First, we will present the events and input fluents. Second, we will express the rules in natural language and ask for their specification in the language of RTEC. In these specifications, you may use any of the built-in events of RTEC, as well as the CG events and fluent. 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Prompt CG-Events:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+In addition to the built-in events of RTEC, you may use the following CG events:
+
+CG - Event 1: life_threat(P)
+Meaning: There is a threat for patient’s “P” life.
+
+CG - Event 2: propose(Tr,P)
+Meaning: A physician proposes a treatment “Tr” for patient “P”.
+
+CG - Event 3: applyTreatment(Tr,P)
+Meaning: A physician applies a treatment “Tr” to a patient “P”.
+
+CG - Event 4: finishTreatment(Tr,P)
+Meaning: A physician finishes a treatment “Tr” for a patient “P”.
+
+CG - Event 5: failure(Tr,P)
+Meaning: The applied treatment “Tr” failed for patient “P”. 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Prompt CG-Fluents:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+You may also use the following CG input fluent:
+
+CG - Input Fluent 2: preconditions(Tr,P)=true
+Meaning: Treatment “Tr” satisfies the preconditions for patient “P”. 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Prompt CG - R1: 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Given the description below, provide the rules in the language of RTEC. You may use the built-in events of RTEC, the CG events, and the CG input fluent. You may also use any of the CG output fluents that you have already specified.
+
+Description - “abnormality”: We aim to identify whether there is an abnormality in a patient’s health. An abnormality is said to start taking place when there is a threat concerning the life of the patient. The abnormality is said to stop taking place when a physician applies a treatment to the patient. 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Prompt CG - R2: 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Given the description below, provide the rules in the language of RTEC. You may use the built-in events of RTEC, the CG events, and the CG input fluent. You may also use any of the CG output fluents that you have already specified.
+
+Description - “candidate”: We aim to identify the maximal intervals during which a patient is a candidate for receiving a treatment. By default, every patient is a candidate for receiving a treatment. Moreover, a patient is said to start being a candidate for receiving a treatment when a treatment is aborted. A patient is said to stop being a candidate for receiving a treatment when a treatment becomes ready for application. 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Prompt CG - R3: 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Given the description below, provide the rules in the language of RTEC. You may use the built-in events of RTEC, the CG events, and the CG input fluent. You may also use any of the CG output fluents that you have already specified.
+
+Description - “ready”: We aim to identify the maximal intervals during which a treatment is considered ready for application to a patient. A treatment is said to start being ready for application to a patient when a physician proposes the treatment and the patient is a candidate to receive it. The treatment is said to stop being ready for application to the patient when the physician applies it to the patient. 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Prompt CG - R4: 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Given the description below, provide the rules in the language of RTEC. You may use the built-in events of RTEC, the CG events, and the CG input fluent. You may also use any of the CG output fluents that you have already specified.
+
+Description - “discarded”: We aim to identify whether a treatment has been discarded with respect to a patient. A treatment is said to be discarded when (1) the patient who was candidate for receiving the treatment starts having an abnormality, provided that the treatment satisfied the necessary preconditions, or (2) when the preconditions of the treatment are no longer satisfied, provided that the patient was a candidate for receiving the treatment. 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Prompt CG - R5: 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Given the description below, provide the rules in the language of RTEC. You may use the built-in events of RTEC, the CG events, and the CG input fluent. You may also use any of the CG output fluents that you have already specified.
+
+Description - “active”: We aim to identify the maximal intervals during which a treatment is actively executed on a patient. A treatment is said to start being active when it is ready, and the physician applies the treatment to the patient. The treatment is said to stop being active when (1) the physician finishes the application of treatment to the patient, (2) there is a failure in the treatment application to the patient, or (3) an abnormality starts being presented in the patient’s health.  
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Prompt CG - R6: 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Given the description below, provide the rules in the language of RTEC. You may use the built-in events of RTEC, the CG events, and the CG input fluent. You may also use any of the CG output fluents that you have already specified.
+
+Description - “completed”: We aim to identify whether the treatment’s application to a patient has been completed. A treatment starts being considered as completed when it is active and the physician finishes the treatment’s application to the patient. 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Prompt CG - R7: 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Given the description below, provide the rules in the language of RTEC. You may use the built-in events of RTEC, the CG events, and the CG input fluent. You may also use any of the CG output fluents that you have already specified.
+
+Description - “aborted”: We aim to identify whether a treatment has been aborted with repect to a patient. A treatment is said to start being aborted when it is active and (1) there is a failure in the treatment application to the patient, or (2) when an abnormality starts being presented. 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Prompt CG - R8: 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Given the description below, provide the rules in the language of RTEC. You may use the built-in events of RTEC, the CG events, and the CG input fluent. You may also use any of the CG output fluents that you have already specified.
+
+Description - “notConformantApplication”: We aim to evaluate when the application of a treatment might not be conformant to the clinical guidelines’ specifications. First, the application starts being considered as not conformant to the patient when the physician applies the treatment while it was ready, but its preconditions were not satisfied. Second, the application starts being considered as not conformant to the patient when the physician applies the treatment while it was ready, but there was an abnormality in the patient’s health. The application stops being considered as not conformant to the patient when the treatment ends being active. 
