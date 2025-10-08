@@ -1,4 +1,4 @@
-# genRTEC
+# genRTEC: A prompting approach that leverages the power of LLMs for constructing executable MAS specifications.
 
 # License
 
