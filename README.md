@@ -33,5 +33,5 @@ For more information and feedback, do not hesitate adding an issue in this repos
     └── llms/                   # Includes rule sets for Claude, Gemini, GPT, and Qwen
         └── claude/
             └── exp1/           # Each experiment contains two folders: predictive_accuracy and syntactic_similarity
-                ├── predictive_accuracy/     # Rules needed for reasoning and computing predictive accuracy using [RTEC](https://github.com/aartikis/rtec)
-                └── syntactic_similarity/    # Rules needed for computing syntactic similarity using [simLP](https://github.com/Periklismant/simLP)
+                ├── predictive_accuracy/     # Rules needed for reasoning and computing predictive accuracy using RTEC.
+                └── syntactic_similarity/    # Rules needed for computing syntactic similarity using simLP.
