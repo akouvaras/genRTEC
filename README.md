@@ -1,6 +1,7 @@
 # genRTEC: A prompting approach that leverages the power of LLMs for constructing executable MAS specifications.
 
 # Directory Structure:
+.
 ├── prompts/                    # Prompts for each application
 │   ├── 01_introducing_rtec.txt
 │   ├── 02_net.txt
