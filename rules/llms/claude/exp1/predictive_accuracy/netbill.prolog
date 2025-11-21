@@ -1,3 +1,31 @@
+/**************************************************************
+ *                                                            *
+ * A NetBill protocol			                       * 
+ *                                                            *
+ *                                                            *
+ * Implemented in RTEC		                               *
+ *								*
+ **************************************************************/
+
+/*
+In this example, institutional power is best expressed by statically determined
+fluents. Power is NOT used as a condition in the rules expressing the effects 
+of actions because cycles cannot include statically determined fluents. 
+Power however is defined to answer queries. 
+
+role_of is rigid, ie it is not a fluent. Agents may be temporarily suspended though.
+
+*/
+
+/**************************************************************************
+ * ACTIONS	                                                          *
+ *                                                                        *
+ * request_quote( consumer, merchant, goods_description                 ) *
+ * present_quote( merchant, consumer, goods_description,  price         ) *
+ * accept_quote(  consumer, merchant, goods_description		  ) 	  *
+ * send_EPO(      consumer, iServer,  goods_description,  price         ) *
+ * send_goods(    merchant, iServer,  goods_description,  goods, key    ) *
+ **************************************************************************/
 
 /***********************
  * INSTITUTIONAL FACTS *
@@ -22,19 +50,22 @@ p(quote(_M,_C,_GD)=true).
 % ----- accepting a quote initiates a contract 
 initiatedAt(contract(Merch,Cons,GD)=true, T) :-
 	happensAt(accept_quote(Cons,Merch,GD), T),
-	holdsAt(quote(Merch,Cons,GD)=true, T).
-	
+	holdsAt(quote(Merch,Cons,GD)=true, T),
+	% contracts may be established only between (non-suspended) consumers and merchants
+	\+ holdsAt(suspended(Merch,merchant)=true, T),
+	\+ holdsAt(suspended(Cons,consumer)=true, T). 
 % ----- a contract is terminated 10 time-points after initiated 
 fi(contract(Merch,Cons,GD)=true, contract(Merch,Cons,GD)=false, 5).
 
 % INSTITUTIONAL POWER
 
 holdsFor(pow(accept_quote(Cons,Merch,GD))=true, I) :-
-	holdsFor(quote(Merch,Cons,GD)=true, I1),
-	holdsFor(suspended(Cons,consumer)=true, I2),
-	holdsFor(suspended(Merch,merchant)=true, I3),
-	union_all([I2, I3], I_suspended),
-    relative_complement_all(I1, [I_suspended], I).
+    holdsFor(quote(Merch, Cons, GD)=true, Iq),
+    holdsFor(suspended(Merch, merchant)=true, Ism),
+    holdsFor(suspended(Cons, consumer)=true, Isc),
+    complement_all([Ism], Icm),
+    complement_all([Isc], Icc),
+    intersect_all([Iq, Icm, Icc], I).
 	
 % ----- we do not define institutional power for the remaining actions
 
@@ -43,7 +74,6 @@ holdsFor(pow(accept_quote(Cons,Merch,GD))=true, I) :-
 % permitted by default; thus we only model (and ground) prohibitions
 initiatedAt(per(present_quote(Merch,Cons))=false, T) :-
 	happensAt(present_quote(Merch,Cons,_GD,_Price), T).
-	
 initiatedAt(per(present_quote(Merch,Cons))=true, T) :-
 	happensAt(request_quote(Cons,Merch,_GD), T).
 fi(per(present_quote(Merch,Cons))=false, per(present_quote(Merch,Cons))=true, 10).
@@ -53,26 +83,30 @@ p(per(present_quote(_Merch,_Cons))=false).
 
 % ----- establishing a contract initiates obligations for the contracting parties
 initiatedAt(obl(send_EPO(Cons,iServer,GD))=true, T1, T, T2) :-
+	% start(F=V) events are not supported for cyclic fluents F
 	initiatedAt(contract(_Merch,Cons,GD)=true, T1, T, T2).
-	
 initiatedAt(obl(send_goods(Merch,iServer,GD))=true, T1, T, T2) :-
+	% start(F=V) events are not supported for cyclic fluents F
 	initiatedAt(contract(Merch,_Cons,GD)=true, T1, T, T2).
 
 % ----- discharging the obligations
 initiatedAt(obl(send_EPO(Cons,iServer,GD))=false, T) :-
 	happensAt(send_EPO(Cons,iServer,GD,Price), T),
+	% below is an atemporal fact indicating the price of GD
+	% facts of this type should be defined along with the agents of protocol
 	price(GD,Price).
-	
 initiatedAt(obl(send_goods(Merch,iServer,GD))=false, T) :-
 	happensAt(send_goods(Merch,iServer,GD,G,Key), T),
-	decrypt(G,Key,Decrypted_G), 
-	meets(Decrypted_G,GD).	
+	% below are atemporal facts whether the decrypted goods are the ones promised
+	% facts of this type should be defined along with the agents of protocol
+	decrypt(G,Key,Decrypted_G), meets(Decrypted_G,GD).	
 
 % ----- the end of the contract terminates the obligations of the contracting parties
 initiatedAt(obl(send_EPO(Cons,iServer,GD))=false, T1, T, T2) :-
+	% end(F=V) events are not supported for cyclic fluents F
 	initiatedAt(contract(_Merch,Cons,GD)=false, T1, T, T2).
-	
 initiatedAt(obl(send_goods(Merch,iServer,GD))=false, T1, T, T2) :-
+	% end(F=V) events are not supported for cyclic fluents F
 	initiatedAt(contract(Merch,_Cons,GD)=false, T1, T, T2).
 
 %       SANCTION       
@@ -82,16 +116,20 @@ initiatedAt(obl(send_goods(Merch,iServer,GD))=false, T1, T, T2) :-
 initiatedAt(suspended(Merch,merchant)=true, T) :-
 	happensAt(present_quote(Merch,Cons,_GD,_Price), T),
 	holdsAt(per(present_quote(Merch,Cons))=false, T).
-
+% ----- failure to discharge the obligation to send an EPO by the end of the contract 
+% ----- suspends the merchant 
 initiatedAt(suspended(Merch,merchant)=true, T1, T, T2) :-
 	% end(F=V) events are not supported for cyclic fluents F
 	initiatedAt(contract(Merch,_Cons,GD)=false, T1, T, T2),
 	holdsAt(obl(send_goods(Merch,iServer,GD))=true, T).
-
+% ----- failure to discharge the obligation to send an EPO by the end of the contract 
+% ----- suspends the consumer 
 initiatedAt(suspended(Cons,consumer)=true, T1, T, T2) :-
+	% end(F=V) events are not supported for cyclic fluents F
 	initiatedAt(contract(_Merch,Cons,GD)=false, T1, T, T2),
 	holdsAt(obl(send_EPO(Cons,iServer,GD))=true, T).	
-
+% ----- a suspension is terminated 10 time-points after initiated, 
+% ----- unless re-initiated in the meantime
 fi(suspended(Ag,Role)=true, suspended(Ag,Role)=false, 3).
 p(suspended(_Ag,_Role)=true).
 

@@ -35,74 +35,66 @@ holdsFor(closeSymmetric_30(Id1,Id2)=true, I) :-
  *		     PERSON					*
  ****************************************************************/
 
-initiatedAt(person(Id)=true, T) :-
-    happensAt(start(walking(Id)=true), T),
-    holdsAt(present(Id)=true, T).
+initiatedAt(person(P)=true, T) :-
+    happensAt(start(walking(P)=true), T).
 
-initiatedAt(person(Id)=true, T) :-
-    happensAt(start(running(Id)=true), T),
-    holdsAt(present(Id)=true, T).
+initiatedAt(person(P)=true, T) :-
+    happensAt(start(running(P)=true), T).
 
-initiatedAt(person(Id)=true, T) :-
-    happensAt(start(active(Id)=true), T),
-    holdsAt(present(Id)=true, T).
+initiatedAt(person(P)=true, T) :-
+    happensAt(start(active(P)=true), T).
 
-initiatedAt(person(Id)=true, T) :-
-    happensAt(start(abrupt(Id)=true), T),
-    holdsAt(present(Id)=true, T).
+initiatedAt(person(P)=true, T) :-
+    happensAt(start(abrupt(P)=true), T).
 
-terminatedAt(person(Id)=true, T) :-
-    happensAt(disappear(Id), T).
+terminatedAt(person(P)=true, T) :-
+    happensAt(disappear(P), T).
 
 /****************************************************************
  *		     LEAVING OBJECT				*
  ****************************************************************/
 
-initiatedAt(leaving_object(Person, Object)=true, T) :-
-    happensAt(appear(Object), T),
-    holdsAt(person(Person)=true, T),
-    holdsAt(closeSymmetric_30(Person, Object)=true, T).
+initiatedAt(leaving_object(Person,Object)=true, T) :-
+	happensAt(appear(Object), T),
+	holdsAt(person(Person)=true, T),
+	% leaving_object is not symmetric in the pair of ids
+	% and thus we need closeSymmetric here as opposed to close
+	holdsAt(closeSymmetric_30(Person, Object)=true, T).
 
 % ----- terminate leaving_object: pick up object
 
-terminatedAt(leaving_object(Person, Object)=true, T) :-
-    happensAt(disappear(Object), T),
-    holdsAt(leaving_object(Person, Object)=true, T).
+initiatedAt(leaving_object(_Person,Object)=false, T) :-
+	happensAt(disappear(Object), T).
 
 /****************************************************************
  *		     MOVING					*
  ****************************************************************/
-
-holdsFor(moving(Person1, Person2)=true, I) :-
-    Person1 \== Person2,
-    holdsFor(person(Person1)=true, IPerson1),
-    holdsFor(person(Person2)=true, IPerson2),
-    holdsFor(walking(Person1)=true, IWalk1),
-    holdsFor(walking(Person2)=true, IWalk2),
-	holdsFor(close_34(Person1,Person2)=true, IClose),
-    intersect_all([IPerson1, IPerson2, IWalk1, IWalk2, IClose], I).
+	
+holdsFor(moving(P1, P2)=true, I) :-
+    holdsFor(person(P1)=true, I_person1),
+    holdsFor(person(P2)=true, I_person2),
+    holdsFor(walking(P1)=true, I_walk1),
+    holdsFor(walking(P2)=true, I_walk2),
+	holdsFor(close_34(P1,P2)=true, CI),
+    intersect_all([I_person1, I_person2, I_walk1, I_walk2, CI], I).
 
 /****************************************************************
  *		     FIGHTING					*
  ****************************************************************/
-	
-holdsFor(aggressor_victim(Person1, Person2)=true, I) :-
-    holdsFor(abrupt(Person1)=true, IAbrupt),
-    holdsFor(inactive(Person2)=true, IInactive),
-    relative_complement_all(IAbrupt, [IInactive], I).
 
-holdsFor(fight_interaction(Person1, Person2)=true, I) :-
-    holdsFor(aggressor_victim(Person1, Person2)=true, I_AV_12),
-    holdsFor(aggressor_victim(Person2, Person1)=true, I_AV_21),
-    union_all([I_AV_12, I_AV_21], I).
-
-holdsFor(fighting(Person1, Person2)=true, I) :-
-    Person1 \== Person2,
-    holdsFor(person(Person1)=true, IPerson1),
-    holdsFor(person(Person2)=true, IPerson2),
-	holdsFor(close_34(Person1,Person2)=true, IClose),
-    holdsFor(fight_interaction(Person1, Person2)=true, IFightInteraction),
-    intersect_all([IPerson1, IPerson2, IClose, IFightInteraction], I).
+holdsFor(fighting(P1, P2)=true, I) :-
+    holdsFor(person(P1)=true, I_p1),
+    holdsFor(person(P2)=true, I_p2),
+	holdsFor(close_34(P1,P2)=true, CloseI),
+    holdsFor(abrupt(P1)=true, I_abrupt1),
+    holdsFor(inactive(P2)=true, I_inactive2),
+    holdsFor(abrupt(P2)=true, I_abrupt2),
+    holdsFor(inactive(P1)=true, I_inactive1),
+    intersect_all([I_p1, I_p2, CloseI, I_abrupt1], I_base1),
+    relative_complement_all(I_base1, [I_inactive2], I_sit1),
+    intersect_all([I_p1, I_p2, CloseI, I_abrupt2], I_base2),
+    relative_complement_all(I_base2, [I_inactive1], I_sit2),
+    union_all([I_sit1, I_sit2], I).
 
 % The elements of these domains are derived from the ground arguments of input entitites
 dynamicDomain(id(_P)).
@@ -147,9 +139,6 @@ grounding(person(P)=true) :- id(P).
 grounding(leaving_object(P,O)=true) :- id(P), id(O), P@<O.
 grounding(moving(P1,P2)=true) :- id(P1), id(P2), P1@<P2.
 grounding(fighting(P1,P2)=true) :- id(P1), id(P2), P1@<P2.
-grounding(aggressor_victim(P1,P2)=true) :- id(P1), id(P2), P1@<P2.
-grounding(fight_interaction(P1,P2)=true) :- id(P1), id(P2), P1@<P2.
-
 
 % For input entities expressed as statically determined fluents, state whether 
 % the fluent instances will be reported as time-points (points/1) or intervals.

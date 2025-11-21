@@ -35,74 +35,67 @@ holdsFor(closeSymmetric_30(Id1,Id2)=true, I) :-
  *		     PERSON					*
  ****************************************************************/
 
-initiatedAt(present(Id)=true, T) :-
-    happensAt(appear(Id), T).
+initiatedAt(person(P)=true, T) :-
+    happensAt(start(walking(P)=true), T).
 
-terminatedAt(present(Id)=true, T) :-
-    happensAt(disappear(Id), T).
+initiatedAt(person(P)=true, T) :-
+    happensAt(start(running(P)=true), T).
 
-initiatedAt(person(Id)=true, T) :-
-    happensAt(start(walking(Id)=true), T),
-    holdsAt(present(Id)=true, T).
+initiatedAt(person(P)=true, T) :-
+    happensAt(start(active(P)=true), T).
 
-initiatedAt(person(Id)=true, T) :-
-    happensAt(start(running(Id)=true), T),
-    holdsAt(present(Id)=true, T).
+initiatedAt(person(P)=true, T) :-
+    happensAt(start(abrupt(P)=true), T).
 
-initiatedAt(person(Id)=true, T) :-
-    happensAt(start(active(Id)=true), T),
-    holdsAt(present(Id)=true, T).
-
-initiatedAt(person(Id)=true, T) :-
-    happensAt(start(abrupt(Id)=true), T),
-    holdsAt(present(Id)=true, T).
-
-terminatedAt(person(Id)=true, T) :-
-    happensAt(disappear(Id), T).
+terminatedAt(person(P)=true, T) :-
+    happensAt(disappear(P), T).
 
 /****************************************************************
  *		     LEAVING OBJECT				*
  ****************************************************************/
 
-initiatedAt(leaving_object(Person, Object)=true, T) :-
-    happensAt(appear(Object), T),
-	holdsAt(closeSymmetric_30(Person, Object)=true, T),
-    holdsAt(person(Person)=true, T),
-    \+ holdsAt(person(Object)=true, T).
+initiatedAt(leaving_object(Person,Object)=true, T) :-
+	happensAt(appear(Object), T),
+	holdsAt(person(Person)=true, T),
+	% leaving_object is not symmetric in the pair of ids
+	% and thus we need closeSymmetric here as opposed to close
+	holdsAt(closeSymmetric_30(Person, Object)=true, T).
 
 % ----- terminate leaving_object: pick up object
 
-terminatedAt(leaving_object(Person, Object)=true, T) :-
-    happensAt(disappear(Object), T),
-    holdsAt(leaving_object(Person, Object)=true, T).
+initiatedAt(leaving_object(_Person,Object)=false, T) :-
+	happensAt(disappear(Object), T).
 
 /****************************************************************
  *		     MOVING					*
  ****************************************************************/
 	
-holdsFor(moving(Person1, Person2)=true, I) :-
-    holdsFor(walking(Person1)=true, I_walk1),
-    holdsFor(walking(Person2)=true, I_walk2),
-	holdsFor(close_34(Person1,Person2)=true, I_close),
-    intersect_all([I_walk1, I_walk2, I_close], I),
-    Person1 @< Person2.
+holdsFor(moving(P1, P2)=true, I) :-
+    holdsFor(person(P1)=true, Ip1),
+    holdsFor(person(P2)=true, Ip2),
+    holdsFor(walking(P1)=true, Iw1),
+    holdsFor(walking(P2)=true, Iw2),
+	holdsFor(close_34(P1,P2)=true, CI),
+    intersect_all([Ip1, Iw1, Ip2, Iw2, CI], I).
 
 /****************************************************************
  *		     FIGHTING					*
  ****************************************************************/
 	
-holdsFor(fighting(Person1, Person2)=true, I) :-
-	holdsFor(close_34(Person1,Person2)=true, I_close),
-    holdsFor(abrupt(Person1)=true, I_abrupt1),
-    holdsFor(abrupt(Person2)=true, I_abrupt2),
-    holdsFor(inactive(Person1)=true, I_inactive1),
-    holdsFor(inactive(Person2)=true, I_inactive2),
-    intersect_all([I_close, I_abrupt1], I_intersect_A),
-    relative_complement_all(I_intersect_A, [I_inactive2], I_case_A),
-    intersect_all([I_close, I_abrupt2], I_intersect_B),
-    relative_complement_all(I_intersect_B, [I_inactive1], I_case_B),
-    union_all([I_case_A, I_case_B], I),
-    Person1 @< Person2.
+holdsFor(fighting(P1, P2)=true, I) :-
+    holdsFor(person(P1)=true, Ip1),
+    holdsFor(person(P2)=true, Ip2),
+	holdsFor(close_34(P1,P2)=true, CloseI),
+    holdsFor(abrupt(P1)=true, Ia1),
+    holdsFor(inactive(P2)=true, Ii2),
+    complement_all([Ii2], Inot_i2),
+    intersect_all([Ia1, Inot_i2], I_caseA),
+    holdsFor(abrupt(P2)=true, Ia2),
+    holdsFor(inactive(P1)=true, Ii1),
+    complement_all([Ii1], Inot_i1),
+    intersect_all([Ia2, Inot_i1], I_caseB),
+    union_all([I_caseA, I_caseB], I_cond3),
+    intersect_all([Ip1, Ip2, CloseI, I_cond3], I).
 
 % The elements of these domains are derived from the ground arguments of input entitites
 dynamicDomain(id(_P)).

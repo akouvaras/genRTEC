@@ -1,158 +1,131 @@
 %--------------- internal_temperature -----------%
 
-initially(internal_temperature(_, _)=normal).
+initially(internal_temperature(_)=normal).
 
-initiatedAt(internal_temperature(Id, VehicleType)=very_warm, T) :-
-    happensAt(internal_temperature_change(Id, VehicleType, very_warm), T).
+initiatedAt(internal_temperature(Id)=very_warm,T) :-
+	happensAt(internal_temperature_change(Id,VehicleType, very_warm), T). 
 
-initiatedAt(internal_temperature(Id, VehicleType)=warm, T) :-
-    happensAt(internal_temperature_change(Id, VehicleType, warm), T).
+initiatedAt(internal_temperature(Id)=warm,T) :-
+	happensAt(internal_temperature_change(Id,VehicleType, warm), T). 
 
-initiatedAt(internal_temperature(Id, VehicleType)=normal, T) :-
-    happensAt(internal_temperature_change(Id, VehicleType, normal), T).
+initiatedAt(internal_temperature(Id)=normal,T) :-
+	happensAt(internal_temperature_change(Id,VehicleType, normal), T). 
 
-initiatedAt(internal_temperature(Id, VehicleType)=cold, T) :-
-    happensAt(internal_temperature_change(Id, VehicleType, cold), T).
+initiatedAt(internal_temperature(Id)=cold,T) :-
+	happensAt(internal_temperature_change(Id,VehicleType, cold), T). 
 
-initiatedAt(internal_temperature(Id, VehicleType)=very_cold, T) :-
-    happensAt(internal_temperature_change(Id, VehicleType, very_cold), T).
-
-terminatedAt(internal_temperature(Id, VehicleType)=_Prev, T) :-
-    happensAt(internal_temperature_change(Id, VehicleType, _New), T).
+initiatedAt(internal_temperature(Id)=very_cold,T) :-
+	happensAt(internal_temperature_change(Id,VehicleType, very_cold), T). 
 
 %--------------- noise_level -----------%
 
-initially(noise_level(_, _)=low).
+initially(noise_level(_)=low).
 
-initiatedAt(noise_level(Id, VehicleType)=low, T) :-
-    happensAt(noise_level_change(Id, VehicleType, low), T).
 
-initiatedAt(noise_level(Id, VehicleType)=normal, T) :-
-    happensAt(noise_level_change(Id, VehicleType, normal), T).
+initiatedAt(noise_level(Id)=low, T) :-
+	happensAt(noise_level_change(Id, VehicleType, low), T).
 
-initiatedAt(noise_level(Id, VehicleType)=high, T) :-
-    happensAt(noise_level_change(Id, VehicleType, high), T).
+initiatedAt(noise_level(Id)=normal, T) :-
+	happensAt(noise_level_change(Id, VehicleType, normal), T).
 
-terminatedAt(noise_level(Id, VehicleType)=_Prev, T) :-
-    happensAt(noise_level_change(Id, VehicleType, _New), T).
+initiatedAt(noise_level(Id)=high, T) :-
+	happensAt(noise_level_change(Id, VehicleType, high), T).
 
 %--------------- passenger_density -----------%
 
-initially(passenger_density(_, _)=low).
+initially(passenger_density(_)=low).
 
-initiatedAt(passenger_density(Id, VehicleType)=low, T) :-
-    happensAt(passenger_density_change(Id, VehicleType, low), T).
+initiatedAt(passenger_density(Id)=low, T) :-
+	happensAt(passenger_density_change(Id, VehicleType, low), T). 
 
-initiatedAt(passenger_density(Id, VehicleType)=normal, T) :-
-    happensAt(passenger_density_change(Id, VehicleType, normal), T).
+initiatedAt(passenger_density(Id)=normal, T) :-
+	happensAt(passenger_density_change(Id, VehicleType, normal), T). 
 
-initiatedAt(passenger_density(Id, VehicleType)=high, T) :-
-    happensAt(passenger_density_change(Id, VehicleType, high), T).
-
-terminatedAt(passenger_density(Id, VehicleType)=_Prev, T) :-
-    happensAt(passenger_density_change(Id, VehicleType, _New), T).
+initiatedAt(passenger_density(Id)=high, T) :-
+	happensAt(passenger_density_change(Id, VehicleType, high), T). 
 
 %--------------- punctuality -----------%
 
-initially(punctuality(_, _)=punctual).
+initially(punctuality(_)=punctual).
 
-initiatedAt(punctuality(Id, VehicleType)=punctual, T) :-
-    happensAt(stop_enter(Id, VehicleType, _StopCode, early), T).
+initiatedAt(punctuality(Id)=punctual, T) :-
+	happensAt(stop_enter(Id, VehicleType, _StopCode, scheduled), T).	
 
-initiatedAt(punctuality(Id, VehicleType)=punctual, T) :-
-    happensAt(stop_enter(Id, VehicleType, _StopCode, scheduled), T).
+initiatedAt(punctuality(Id)=punctual, T) :-
+	happensAt(stop_enter(Id, VehicleType, _StopCode, early), T).	
 
-initiatedAt(punctuality(Id, VehicleType)=non_punctual, T) :-
-    happensAt(stop_enter(Id, VehicleType, _StopCode, late), T).
+initiatedAt(punctuality(Id)=non_punctual, T) :-
+	happensAt(stop_enter(Id, VehicleType, _StopCode, late), T).
 
-initiatedAt(punctuality(Id, VehicleType)=non_punctual, T) :-
-    happensAt(stop_leave(Id, VehicleType, _StopCode, early), T).
-
-terminatedAt(punctuality(Id, VehicleType)=_Prev, T) :-
-    happensAt(stop_enter(Id, VehicleType, _StopCode, _Status), T).
-
-terminatedAt(punctuality(Id, VehicleType)=_Prev, T) :-
-    happensAt(stop_leave(Id, VehicleType, _StopCode, _Status), T).
+initiatedAt(punctuality(Id)=non_punctual, T) :-
+	happensAt(stop_leave(Id, VehicleType, _StopCode, early), T).
 
 %-------------- driving_style----------------------%
 
-holdsFor(driving_style(Id, VehicleType)=unsafe, I_unsafe) :-
-    holdsFor(sharp_turn(Id,VehicleType)=very_sharp, It_vs),
-    holdsFor(abrupt_acceleration(Id,VehicleType)=very_abrupt, Ia_va),
-    holdsFor(abrupt_deceleration(Id,VehicleType)=very_abrupt, Id_vd),
-    union_all([It_vs, Ia_va, Id_vd], I_unsafe).
-
-holdsFor(driving_style(Id, VehicleType)=uncomfortable, I_uncomf) :-
-    holdsFor(sharp_turn(Id,VehicleType)=very_sharp, It_vs),
-    holdsFor(abrupt_acceleration(Id,VehicleType)=very_abrupt, Ia_va),
-    holdsFor(abrupt_deceleration(Id,VehicleType)=very_abrupt, Id_vd),
-    union_all([It_vs, Ia_va, Id_vd], I_unsafe),
-    holdsFor(sharp_turn(Id,VehicleType)=sharp, It_s),
-    relative_complement_all(It_s, [Ia_va, Id_vd, It_vs], I_A),
-    holdsFor(abrupt_acceleration(Id,VehicleType)=abrupt, Ia_a),
-    holdsFor(abrupt_deceleration(Id,VehicleType)=abrupt, Id_ad),
-    union_all([Ia_a, Id_ad], I_B_raw),
-    union_all([I_A, I_B_raw], I_uncomf0),
-    relative_complement_all(I_uncomf0, [I_unsafe], I_uncomf).
+holdsFor(driving_style(Id)=unsafe, I) :-
+    holdsFor(sharp_turn(Id, _VehicleType)=very_sharp,         It_vs),
+    holdsFor(abrupt_acceleration(Id, _VehicleType)=very_abrupt,It_va),
+    holdsFor(abrupt_deceleration(Id, _VehicleType)=very_abrupt,It_vd),
+    union_all([It_vs, It_va, It_vd], I).
+	
+holdsFor(driving_style(Id)=uncomfortable, I) :-
+    holdsFor(sharp_turn(Id, _VehicleType)=sharp,                It_s),
+    holdsFor(abrupt_acceleration(Id, _VehicleType)=abrupt,      It_aa),
+    holdsFor(abrupt_deceleration(Id, _VehicleType)=abrupt,      It_ad),
+    holdsFor(abrupt_acceleration(Id, _VehicleType)=very_abrupt, It_va),
+    holdsFor(abrupt_deceleration(Id, _VehicleType)=very_abrupt, It_vd),
+    holdsFor(driving_style(Id)=unsafe,                          Iunsafe),
+    relative_complement_all(It_s, [It_va, It_vd],               It_sharp_ok),
+    union_all([It_aa, It_ad],                                   It_abrupt),
+    union_all([It_sharp_ok, It_abrupt],                         I0),
+    relative_complement_all(I0, [Iunsafe], I).  
 
 %-------------- driving_quality ----------------%
 
-holdsFor(driving_quality(Id, VehicleType)=high, I_high) :-
-    holdsFor(punctuality(Id, VehicleType)=punctual, Ip),
-    holdsFor(driving_style(Id, VehicleType)=unsafe, Iu),
-    holdsFor(driving_style(Id, VehicleType)=uncomfortable, Iuc),
-    union_all([Iu, Iuc], Ibad),
-    relative_complement_all(Ip, [Ibad], I_high).
+holdsFor(driving_quality(Id)=high, I) :-
+    holdsFor(punctuality(Id)=punctual,        Ip),
+    holdsFor(driving_style(Id)=unsafe,        Iu),
+    holdsFor(driving_style(Id)=uncomfortable, Iuc),
+    relative_complement_all(Ip, [Iu, Iuc], I).
 
-holdsFor(driving_quality(Id, VehicleType)=medium, I_med) :-
-    holdsFor(punctuality(Id, VehicleType)=punctual, Ip),
-    holdsFor(driving_style(Id, VehicleType)=uncomfortable, Iuc),
-    intersect_all([Ip, Iuc], I_med).
+holdsFor(driving_quality(Id)=medium, I) :-
+    holdsFor(punctuality(Id)=punctual,            Ip),
+    holdsFor(driving_style(Id)=uncomfortable,     Iuc),
+    intersect_all([Ip, Iuc], I).
 
-holdsFor(driving_quality(Id, VehicleType)=low, I_low) :-
-    holdsFor(punctuality(Id, VehicleType)=non_punctual, Inp),
-    holdsFor(driving_style(Id, VehicleType)=unsafe, Iu),
-    union_all([Inp, Iu], I_low).
+holdsFor(driving_quality(Id)=low, I) :-
+    holdsFor(punctuality(Id)=non_punctual,        Inp),
+    holdsFor(driving_style(Id)=unsafe,            Iu),
+    union_all([Inp, Iu], I).
 
 %------------ passenger_comfort -------------%
 
-holdsFor(passenger_comfort(Id, VehicleType)=reducing, I) :-
-    holdsFor(driving_style(Id, VehicleType)=uncomfortable, I_uncomf),
-    holdsFor(driving_style(Id, VehicleType)=unsafe, I_unsafe),
-    holdsFor(passenger_density(Id, VehicleType)=high, I_pd_high),
-    holdsFor(noise_level(Id, VehicleType)=high, I_noise_high),
-    holdsFor(internal_temperature(Id, VehicleType)=very_warm, I_temp_vwarm),
-    holdsFor(internal_temperature(Id, VehicleType)=very_cold, I_temp_vcold),
-    union_all([ I_uncomf
-              , I_unsafe
-              , I_pd_high
-              , I_noise_high
-              , I_temp_vwarm
-              , I_temp_vcold
-              ], I).
+holdsFor(passenger_comfort(Id)=reducing, I) :-
+    holdsFor(driving_style(Id)=unsafe,            Iu),
+    holdsFor(driving_style(Id)=uncomfortable,     Iuc),
+    holdsFor(passenger_density(Id)=high,          Ipden),
+    holdsFor(noise_level(Id)=high,                Inoise),
+    holdsFor(internal_temperature(Id)=very_warm,  It_hot),
+    holdsFor(internal_temperature(Id)=very_cold,  It_cold),
+    union_all([Iu, Iuc, Ipden, Inoise, It_hot, It_cold], I).
 
 %--------------- driver_comfort -----------------%
 
-holdsFor(driver_comfort(Id, VehicleType)=reducing, I) :-
-    holdsFor(driving_style(Id, VehicleType)=uncomfortable, I_uncomf),
-    holdsFor(driving_style(Id, VehicleType)=unsafe, I_unsafe),
-    holdsFor(noise_level(Id, VehicleType)=high, I_noise_high),
-    holdsFor(internal_temperature(Id, VehicleType)=very_warm, I_temp_vwarm),
-    holdsFor(internal_temperature(Id, VehicleType)=very_cold, I_temp_vcold),
-    union_all([ I_uncomf
-              , I_unsafe
-              , I_noise_high
-              , I_temp_vwarm
-              , I_temp_vcold
-              ], I).
+holdsFor(driver_comfort(Id)=reducing, I) :-
+    holdsFor(driving_style(Id)=unsafe,            Iu),
+    holdsFor(driving_style(Id)=uncomfortable,     Iuc),
+    holdsFor(noise_level(Id)=high,                Inoise),
+    holdsFor(internal_temperature(Id)=very_warm,  It_hot),
+    holdsFor(internal_temperature(Id)=very_cold,  It_cold),
+    union_all([Iu, Iuc, Inoise, It_hot, It_cold], I).
 
-%----------------- passenger_satisfaction ------------------%
+%---------------- passenger_satisfaction ------------------%
 
-holdsFor(passenger_satisfaction(Id, VehicleType)=reducing, I) :-
-    holdsFor(punctuality(Id, VehicleType)=non_punctual, Inp),
-    holdsFor(passenger_comfort(Id, VehicleType)=reducing, Ipc),
+holdsFor(passenger_satisfaction(Id)=reducing, I) :-
+    holdsFor(punctuality(Id)=non_punctual,      Inp),
+    holdsFor(passenger_comfort(Id)=reducing,    Ipc),
     union_all([Inp, Ipc], I).
-
+	
 % These input statically determined fluents arrive in the form of intervals in input streams.
 collectIntervals(abrupt_acceleration(_,_)=abrupt).
 collectIntervals(abrupt_acceleration(_,_)=very_abrupt).
@@ -193,39 +166,17 @@ grounding(sharp_turn(Id,VehicleType)=very_sharp):-
     vehicle(Id, VehicleType).
 
 % Grounding for output entities:
-grounding(punctuality(Id,VehicleType)=punctual):-
-    vehicle(Id, VehicleType).   
-grounding(punctuality(Id,VehicleType)=non_punctual):-
-    vehicle(Id, VehicleType).
-grounding(punctuality(Id,VehicleType)=_Prev):-
-    vehicle(Id, VehicleType).
-grounding(passenger_density(Id,VehicleType)=high):-
-    vehicle(Id, VehicleType).
-grounding(passenger_density(Id,VehicleType)=_Prev):-
-    vehicle(Id, VehicleType).
-grounding(noise_level(Id,VehicleType)=high):-
-    vehicle(Id, VehicleType).
-grounding(noise_level(Id,VehicleType)=_Prev):-
-    vehicle(Id, VehicleType).
-grounding(internal_temperature(Id,VehicleType)=very_warm):-
-    vehicle(Id, VehicleType).
-grounding(internal_temperature(Id,VehicleType)=_Prev):-
-    vehicle(Id, VehicleType).
-grounding(internal_temperature(Id,VehicleType)=very_cold):-
-    vehicle(Id, VehicleType).
-grounding(driving_style(Id,VehicleType)=unsafe):-
-    vehicle(Id, VehicleType).
-grounding(driving_style(Id,VehicleType)=uncomfortable):-
-    vehicle(Id, VehicleType).
-grounding(driving_quality(Id,VehicleType)=high):-
-    vehicle(Id, VehicleType).
-grounding(driving_quality(Id,VehicleType)=medium):-
-    vehicle(Id, VehicleType).
-grounding(driving_quality(Id,VehicleType)=low):-
-    vehicle(Id, VehicleType). 
-grounding(passenger_comfort(Id,VehicleType)=reducing):-
-    vehicle(Id, VehicleType).
-grounding(driver_comfort(Id,VehicleType)=reducing):-
-    vehicle(Id, VehicleType).
-grounding(passenger_satisfaction(Id,VehicleType)=reducing):-
-    vehicle(Id, VehicleType).
+grounding(punctuality(Id)=punctual)            :- vehicle(Id, _).
+grounding(punctuality(Id)=non_punctual)        :- vehicle(Id, _).
+grounding(passenger_density(Id)=high)          :- vehicle(Id, _).
+grounding(noise_level(Id)=high)                :- vehicle(Id, _).
+grounding(internal_temperature(Id)=very_warm)  :- vehicle(Id, _).
+grounding(internal_temperature(Id)=very_cold)  :- vehicle(Id, _).
+grounding(driving_style(Id)=unsafe)            :- vehicle(Id, _).
+grounding(driving_style(Id)=uncomfortable)     :- vehicle(Id, _).
+grounding(driving_quality(Id)=high)            :- vehicle(Id, _).
+grounding(driving_quality(Id)=medium)          :- vehicle(Id, _).
+grounding(driving_quality(Id)=low)             :- vehicle(Id, _).
+grounding(passenger_comfort(Id)=reducing)      :- vehicle(Id, _).
+grounding(driver_comfort(Id)=reducing)         :- vehicle(Id, _).
+grounding(passenger_satisfaction(Id)=reducing) :- vehicle(Id, _).

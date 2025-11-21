@@ -1,3 +1,31 @@
+/**************************************************************
+ *                                                            *
+ * A NetBill protocol			                       * 
+ *                                                            *
+ *                                                            *
+ * Implemented in RTEC		                               *
+ *								*
+ **************************************************************/
+
+/*
+In this example, institutional power is best expressed by statically determined
+fluents. Power is NOT used as a condition in the rules expressing the effects 
+of actions because cycles cannot include statically determined fluents. 
+Power however is defined to answer queries. 
+
+role_of is rigid, ie it is not a fluent. Agents may be temporarily suspended though.
+
+*/
+
+/**************************************************************************
+ * ACTIONS	                                                          *
+ *                                                                        *
+ * request_quote( consumer, merchant, goods_description                 ) *
+ * present_quote( merchant, consumer, goods_description,  price         ) *
+ * accept_quote(  consumer, merchant, goods_description		  ) 	  *
+ * send_EPO(      consumer, iServer,  goods_description,  price         ) *
+ * send_goods(    merchant, iServer,  goods_description,  goods, key    ) *
+ **************************************************************************/
 
 /***********************
  * INSTITUTIONAL FACTS *
@@ -23,30 +51,32 @@ initiatedAt(contract(Merch,Cons,GD)=true, T) :-
 	happensAt(accept_quote(Cons,Merch,GD), T),
 	holdsAt(quote(Merch,Cons,GD)=true, T),
 	% contracts may be established only between (non-suspended) consumers and merchants
-	\+ holdsAt(suspended(Merch)=true, T),
-	\+ holdsAt(suspended(Cons)=true, T). 
+	\+ holdsAt(suspended(Merch,merchant)=true, T),
+	\+ holdsAt(suspended(Cons,consumer)=true, T). 
 % ----- a contract is terminated 10 time-points after initiated 
 fi(contract(Merch,Cons,GD)=true, contract(Merch,Cons,GD)=false, 5).
 
 % INSTITUTIONAL POWER
 
 holdsFor(pow(accept_quote(Cons,Merch,GD))=true, I) :-
-	holdsFor(quote(Merch,Cons,GD)=true, I1),
-	holdsFor(suspended(Cons,consumer)=true, I2),
-	holdsFor(suspended(Merch,merchant)=true, I3),
-	relative_complement_all(I1, [I2,I3], I).
+    holdsFor(quote(Merch, Cons, GD)=true, I_quote),
+    holdsFor(suspended(Merch, merchant)=true, I_susp_m),
+    complement_all([I_susp_m], I_not_susp_m),
+    holdsFor(suspended(Cons, consumer)=true, I_susp_c),
+    complement_all([I_susp_c], I_not_susp_c),
+    intersect_all([I_quote, I_not_susp_m, I_not_susp_c], I).
 	
 % ----- we do not define institutional power for the remaining actions
 
 % *     PERMISSION      *
 
 % permitted by default; thus we only model (and ground) prohibitions
-initiatedAt(per(present_quote(Merch,Cons,GD))=false, T) :-
+initiatedAt(per(present_quote(Merch,Cons))=false, T) :-
 	happensAt(present_quote(Merch,Cons,_GD,_Price), T).
-initiatedAt(per(present_quote(Merch,Cons,GD))=true, T) :-
+initiatedAt(per(present_quote(Merch,Cons))=true, T) :-
 	happensAt(request_quote(Cons,Merch,_GD), T).
-fi(per(present_quote(Merch,Cons,GD))=false, per(present_quote(Merch,Cons,GD))=true, 10).
-p(per(present_quote(_Merch,_Cons,GD))=false).
+fi(per(present_quote(Merch,Cons))=false, per(present_quote(Merch,Cons))=true, 10).
+p(per(present_quote(_Merch,_Cons))=false).
 
 % *     OBLIGATION      *
 
@@ -84,7 +114,7 @@ initiatedAt(obl(send_goods(Merch,iServer,GD))=false, T1, T, T2) :-
 % ----- then it will be suspended
 initiatedAt(suspended(Merch,merchant)=true, T) :-
 	happensAt(present_quote(Merch,Cons,_GD,_Price), T),
-	holdsAt(per(present_quote(Merch,Cons,GD))=false, T).
+	holdsAt(per(present_quote(Merch,Cons))=false, T).
 % ----- failure to discharge the obligation to send an EPO by the end of the contract 
 % ----- suspends the merchant 
 initiatedAt(suspended(Merch,merchant)=true, T1, T, T2) :-
@@ -134,10 +164,10 @@ grounding(contract(M,C,GD)=false):-
     person_pair(M,C),role_of(M,merchant), role_of(C,consumer), \+ M=C, queryGoodsDescription(GD).
 grounding(pow(accept_quote(C,M,GD))=true):-
     person_pair(M,C),role_of(M,merchant), role_of(C,consumer), \+ C=M, queryGoodsDescription(GD).
-grounding(per(present_quote(M,C,GD))=false):-
-    person_pair(M,C),role_of(M,merchant), role_of(C,consumer), \+ C=M, queryGoodsDescription(GD).
-grounding(per(present_quote(M,C,GD))=true):-
-    person_pair(M,C),role_of(M,merchant), role_of(C,consumer), \+ C=M, queryGoodsDescription(GD).
+grounding(per(present_quote(M,C))=false):-
+    person_pair(M,C),role_of(M,merchant), role_of(C,consumer), \+ C=M.
+grounding(per(present_quote(M,C))=true):-
+    person_pair(M,C),role_of(M,merchant), role_of(C,consumer), \+ C=M.
 grounding(obl(send_EPO(C,iServer,GD))=true):-
     person(C),role_of(C,consumer), queryGoodsDescription(GD).
 grounding(obl(send_goods(M,iServer,GD))=true):-

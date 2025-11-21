@@ -34,18 +34,28 @@ holdsFor(closeSymmetric_30(Id1,Id2)=true, I) :-
 /****************************************************************
  *		     PERSON					*
  ****************************************************************/
+
+initiatedAt(visible(Id)=true, T) :-
+    happensAt(appear(Id), T).
+
+terminatedAt(visible(Id)=true, T) :-
+    happensAt(disappear(Id), T).
 	
 initiatedAt(person(Id)=true, T) :-
-    happensAt(start(walking(Id)=true), T).
+    happensAt(start(walking(Id)=true), T),
+    holdsAt(visible(Id)=true, T).
 
 initiatedAt(person(Id)=true, T) :-
-    happensAt(start(running(Id)=true), T).
+    happensAt(start(running(Id)=true), T),
+    holdsAt(visible(Id)=true, T).
 
 initiatedAt(person(Id)=true, T) :-
-    happensAt(start(active(Id)=true), T).
+    happensAt(start(active(Id)=true), T),
+    holdsAt(visible(Id)=true, T).
 
 initiatedAt(person(Id)=true, T) :-
-    happensAt(start(abrupt(Id)=true), T).
+    happensAt(start(abrupt(Id)=true), T),
+    holdsAt(visible(Id)=true, T).	
 
 terminatedAt(person(Id)=true, T) :-
     happensAt(disappear(Id), T).
@@ -53,48 +63,49 @@ terminatedAt(person(Id)=true, T) :-
 /****************************************************************
  *		     LEAVING OBJECT				*
  ****************************************************************/
-	
-initiatedAt(leaving_object(Person, Object)=true, T) :-
-    happensAt(appear(Object), T),
-    holdsAt(closeSymmetric_30(Person, Object)=true, T),
-    holdsAt(person(Person)=true, T).
+
+initiatedAt(leaving_object(Person,Object)=true, T) :-
+	happensAt(appear(Object), T),
+	holdsAt(person(Person)=true, T),
+	% leaving_object is not symmetric in the pair of ids
+	% and thus we need closeSymmetric here as opposed to close
+	holdsAt(closeSymmetric_30(Person, Object)=true, T).
 
 % ----- terminate leaving_object: pick up object
 
-terminatedAt(leaving_object(Person, Object)=true, T) :-
-    happensAt(disappear(Object), T).
+initiatedAt(leaving_object(_Person,Object)=false, T) :-
+	happensAt(disappear(Object), T).
 
 /****************************************************************
  *		     MOVING					*
  ****************************************************************/
 	
 holdsFor(moving(P1, P2)=true, I) :-
-    P1 @< P2,
-    holdsFor(person(P1)=true, IPerson1),
-    holdsFor(person(P2)=true, IPerson2),
-    holdsFor(walking(P1)=true, IWalk1),
-    holdsFor(walking(P2)=true, IWalk2),
-	holdsFor(close_34(P1,P2)=true, IClose),
-    intersect_all([IPerson1, IPerson2, IWalk1, IWalk2, IClose], I).
+    holdsFor(person(P1)=true, Ip1),
+    holdsFor(person(P2)=true, Ip2),
+    holdsFor(walking(P1)=true, Iw1),
+    holdsFor(walking(P2)=true, Iw2),
+	holdsFor(close_34(P1,P2)=true, CI),
+    intersect_all([Ip1, Ip2, Iw1, Iw2, CI], I).
 
 /****************************************************************
  *		     FIGHTING					*
  ****************************************************************/
-	
-holdsFor(fighting_candidate(P1, P2)=true, I) :-
-    holdsFor(person(P1)=true, IPerson1),
-    holdsFor(person(P2)=true, IPerson2),
-	holdsFor(close_34(P1,P2)=true, IClose),
-    holdsFor(abrupt(P1)=true, IAbrupt),
-    intersect_all([IPerson1, IPerson2, IClose, IAbrupt], ICandidate),
-    holdsFor(inactive(P2)=true, IInactive),
-    relative_complement_all(ICandidate, [IInactive], I).
 
 holdsFor(fighting(P1, P2)=true, I) :-
-    P1 @< P2,
-    holdsFor(fighting_candidate(P1, P2)=true, ICase1),
-    holdsFor(fighting_candidate(P2, P1)=true, ICase2),
-    union_all([ICase1, ICase2], I).
+    holdsFor(person(P1)=true, Ip1),
+    holdsFor(person(P2)=true, Ip2),
+	holdsFor(close_34(P1,P2)=true, CloseI),
+    holdsFor(abrupt(P1)=true, Ia1),
+    holdsFor(abrupt(P2)=true, Ia2),
+    holdsFor(inactive(P1)=true, Ii1),
+    complement_all([Ii1], I_not_inactive1),
+    holdsFor(inactive(P2)=true, Ii2),
+    complement_all([Ii2], I_not_inactive2),
+    intersect_all([Ia1, I_not_inactive2], I_CaseA),
+    intersect_all([Ia2, I_not_inactive1], I_CaseB),
+    union_all([I_CaseA, I_CaseB], I_logic),
+    intersect_all([Ip1, Ip2, CloseI, I_logic], I).
 
 % The elements of these domains are derived from the ground arguments of input entitites
 dynamicDomain(id(_P)).
@@ -139,7 +150,7 @@ grounding(person(P)=true) :- id(P).
 grounding(leaving_object(P,O)=true) :- id(P), id(O), P@<O.
 grounding(moving(P1,P2)=true) :- id(P1), id(P2), P1@<P2.
 grounding(fighting(P1,P2)=true) :- id(P1), id(P2), P1@<P2.
-grounding(fighting_candidate(P1,P2)=true) :- id(P1), id(P2), P1@<P2.
+grounding(visible(P)=true) :- id(P).
 
 
 % For input entities expressed as statically determined fluents, state whether 

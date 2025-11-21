@@ -1,3 +1,31 @@
+/**************************************************************
+ *                                                            *
+ * A NetBill protocol			                       * 
+ *                                                            *
+ *                                                            *
+ * Implemented in RTEC		                               *
+ *								*
+ **************************************************************/
+
+/*
+In this example, institutional power is best expressed by statically determined
+fluents. Power is NOT used as a condition in the rules expressing the effects 
+of actions because cycles cannot include statically determined fluents. 
+Power however is defined to answer queries. 
+
+role_of is rigid, ie it is not a fluent. Agents may be temporarily suspended though.
+
+*/
+
+/**************************************************************************
+ * ACTIONS	                                                          *
+ *                                                                        *
+ * request_quote( consumer, merchant, goods_description                 ) *
+ * present_quote( merchant, consumer, goods_description,  price         ) *
+ * accept_quote(  consumer, merchant, goods_description		  ) 	  *
+ * send_EPO(      consumer, iServer,  goods_description,  price         ) *
+ * send_goods(    merchant, iServer,  goods_description,  goods, key    ) *
+ **************************************************************************/
 
 /***********************
  * INSTITUTIONAL FACTS *
@@ -21,18 +49,20 @@ p(quote(_M,_C,_GD)=true).
 % ----- accepting a quote initiates a contract 
 initiatedAt(contract(Merch,Cons,GD)=true, T) :-
 	happensAt(accept_quote(Cons,Merch,GD), T),
-	holdsAt(quote(Merch,Cons,GD)=true, T). 
+	holdsAt(quote(Merch,Cons,GD)=true, T),
+	% contracts may be established only between (non-suspended) consumers and merchants
+	\+ holdsAt(suspended(Merch,merchant)=true, T),
+	\+ holdsAt(suspended(Cons,consumer)=true, T). 
 % ----- a contract is terminated 10 time-points after initiated 
 fi(contract(Merch,Cons,GD)=true, contract(Merch,Cons,GD)=false, 5).
 
 % INSTITUTIONAL POWER
 
 holdsFor(pow(accept_quote(Cons,Merch,GD))=true, I) :-
-	holdsFor(quote(Merch,Cons,GD)=true, Iq),
-	holdsFor(suspended(Cons,consumer)=true, Ism),
-	holdsFor(suspended(Merch,merchant)=true, Isc),
-    union_all([Ism, Isc], Isuspended),
-    relative_complement_all(Iq, [Isuspended], I).
+	holdsFor(quote(Merch,Cons,GD)=true, I1),
+	holdsFor(suspended(Cons,consumer)=true, I2),
+	holdsFor(suspended(Merch,merchant)=true, I3),
+	relative_complement_all(I1, [I2,I3], I).
 	
 % ----- we do not define institutional power for the remaining actions
 

@@ -1,3 +1,36 @@
+/****************************************************************
+ *                                                              *
+ * A Voting Protocol (VoPr) in RTEC				*
+ * Alexander Artikis						*
+ *								*
+ * Based on the specification of Jeremy Pitt		 	* 
+ *                                                              *
+ ****************************************************************/
+
+/*
+In this example, institutional power is best expressed by statically determined
+fluents. Power is NOT used as a condition in the rules expressing the effects 
+of actions because cycles cannot include statically determined fluents. 
+Power however is defined to answer queries. 
+*/
+
+/****************************************
+  AGENT ACTIONS 	                                             
+  propose(Agent, Motion)           
+  second(Agent, Motion)           
+  vote(Agent, Motion, aye)      	
+  vote(Agent, Motion, nay)      			
+  close_ballot(Agent, Motion)          
+  declare(Agent, Motion, carried/not_carried)	
+ ****************************************/                          
+
+/********************************
+  PROTOCOL FLOW 
+  propose(Ag,M), second(Ag,M), vote(V1,M,Vote),...,vote(Vn,M,Vote),
+  close_ballot(C,M), declare(C, M, Outcome)
+
+  agents start voting as soon as there is a secondment, ie there is no open_ballot
+ ********************************/
 
 /*********************
       status(M)
@@ -10,78 +43,55 @@ fi(status(M)=voted, status(M)=null, 10).
 
 initially(status(_M)=null).
 
-initiatedAt(status(M) = proposed, T) :-
-    happensAt(propose(_Ag, M), T),
-    holdsAt(status(M) = null, T).
+initiatedAt(status(M)=proposed, T) :-
+	happensAt(propose(_P,M), T), 
+	holdsAt(status(M)=null, T).
 
-terminatedAt(status(M) = null, T) :-
-    happensAt(propose(_Ag, M), T).
+initiatedAt(status(M)=voting, T) :-
+	happensAt(second(_S,M), T),
+	holdsAt(status(M)=proposed, T).
 
-initiatedAt(status(M) = voting, T) :-
-    happensAt(second(_Ag, M), T),
-    holdsAt(status(M) = proposed, T).
+initiatedAt(status(M)=voted, T) :-
+	happensAt(close_ballot(C,M), T), 
+	role_of(C,chair),
+	holdsAt(status(M)=voting, T).
 
-terminatedAt(status(M) = proposed, T) :-
-    happensAt(second(_Ag, M), T).
+initiatedAt(status(M)=null, T) :-
+	happensAt(declare(C,M,_), T), 
+	role_of(C,chair),
+	holdsAt(status(M)=voted, T).
 
-initiatedAt(status(M) = voted, T) :-
-    happensAt(close_ballot(C, M), T),
-    role_of(C, chair),
-    holdsAt(status(M) = voting, T).
-
-terminatedAt(status(M) = voting, T) :-
-    happensAt(close_ballot(C, M), T),
-    role_of(C, chair).
-
-initiatedAt(status(M) = null, T) :-
-    happensAt(declare(C, M, _Outcome), T),
-    role_of(C, chair),
-    holdsAt(status(M) = voted, T).
-
-terminatedAt(status(M) = voted, T) :-
-    happensAt(declare(C, M, _Outcome), T),
-    role_of(C, chair).
-	
 /*********************
     voted(V,M)=Vote
  *********************/
- 
-initially(voted(Ag, M) = null).
 
-initiatedAt(voted(Ag, M) = aye, T) :-
-    happensAt(vote(Ag, M, aye), T),
-    holdsAt(status(M) = voting, T).
+initiatedAt(voted(V,M)=aye, T) :-
+	happensAt(vote(V,M,aye), T), 
+	holdsAt(status(M)=voting, T).	
 
-initiatedAt(voted(Ag, M) = nay, T) :-
-    happensAt(vote(Ag, M, nay), T),
-    holdsAt(status(M) = voting, T).
+initiatedAt(voted(V,M)=nay, T) :-
+	happensAt(vote(V,M,nay), T), 
+	holdsAt(status(M)=voting, T).	
 
-terminatedAt(voted(Ag, M) = V, T) :-
-    happensAt(vote(Ag, M, V2), T),
-    V \= V2.
-
-initiatedAt(voted(Ag, M) = null, T) :-
-    happensAt(start(status(M) = null), T).
-
-terminatedAt(voted(Ag, M) = _Prev, T) :-
-    happensAt(start(status(M) = null), T).
+initiatedAt(voted(_V,M)=null, T) :-
+	happensAt(start(status(M)=null), T).
 
 /*****************************
       outcome(M)=Outcome
  *****************************/
 
-initiatedAt(outcome(M) = carried, T) :-
-    happensAt(declare(C, M, carried), T),
-    role_of(C, chair),
-    holdsAt(status(M) = voted, T).
+initiatedAt(outcome(M)=carried, T) :-
+	happensAt(declare(C,M,carried), T), 
+	holdsAt(status(M)=voted, T),	
+	role_of(C,chair).
 
-initiatedAt(outcome(M) = not_carried, T) :-
-    happensAt(declare(C, M, not_carried), T),
-    role_of(C, chair),
-    holdsAt(status(M) = voted, T).
+initiatedAt(outcome(M)=not_carried, T) :-
+	happensAt(declare(C,M,not_carried), T), 
+	holdsAt(status(M)=voted, T),	
+	role_of(C,chair).
 
-terminatedAt(outcome(M) = _Prev, T) :-
-    happensAt(start(status(M) = proposed), T).
+terminatedAt(outcome(M)=_O, T) :-
+	happensAt(start(status(M)=proposed), T).
 
 /*********************
   INSTITUTIONAL POWER
@@ -103,7 +113,7 @@ holdsFor(pow(close_ballot(C,M))=true, I) :-
 holdsFor(pow(declare(C,M))=true, I) :-
 	role_of(C,chair),
 	holdsFor(status(M)=voted, I).
-	
+
 % The elements of these domains are derived from the ground arguments of input entitites
 dynamicDomain(person(_P)).
 
@@ -125,11 +135,9 @@ grounding(status(M)=voted)			:- queryMotion(M).
 grounding(voted(Ag,M)=null)			:- person(Ag),role_of(Ag,voter), queryMotion(M).
 grounding(voted(Ag,M)=aye)			:- person(Ag),role_of(Ag,voter), queryMotion(M).
 grounding(voted(Ag,M)=nay)			:- person(Ag),role_of(Ag,voter), queryMotion(M).
-grounding(voted(Ag,M)=_Prev)			:- person(Ag),role_of(Ag,voter), queryMotion(M).
 
 grounding(outcome(M)=carried)			:- queryMotion(M).
 grounding(outcome(M)=not_carried)		:- queryMotion(M).
-grounding(outcome(M)=_Prev)		:- queryMotion(M).
 
 grounding(pow(propose(Ag,M))=true)		:- person(Ag), queryMotion(M).
 grounding(pow(second(Ag,M))=true)		:- person(Ag), queryMotion(M).
