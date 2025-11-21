@@ -1,7 +1,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 Prompt VP:
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Now, we will start with the specification of the multi-agent voting procedure (VP). First, we will present the events and input fluents. Second, we will express the rules in natural language and ask for their specification in the language of RTEC. In these specifications, you may use any of the built-in events of RTEC, as well as the VP events and fluents. 
+Now, we will start with the specification of the multi-agent voting protocol procedure (VP). First, we will present the events. Second, we will present the predicates expressing the background knowledge. Third, we will provide the protocol rules in natural language and ask for their specification in the language of RTEC. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 Prompt VP-Events:
@@ -40,27 +40,27 @@ Meaning: An agent “C” holds the role of chair.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 Prompt VP-R1:
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Given the description below, provide the rules in the language of RTEC. You may use the built-in events of RTEC, the VP events, and the VP background knowledge predicate. You may also use any of the VP output fluents that you have already specified. 
+Given the description below, provide the rules in the language of RTEC. You may use the built-in events of RTEC, the VP events, and the VP background knowledge predicate. You may also use any of the VP output fluents, i.e. the fluents that we will define together.
 
-Description - “status”: We aim to determine the status of a motion. By default, every motion’s status is “null”. First, a motion’s status becomes “proposed” when an agent proposes the motion, provided that the status of the motion is “null”. Second, the status changes to “voting” when an agent seconds the motion that was previously “proposed”. Third, the status becomes “voted” when the agent occupying the role of the chair closes the ballot on the motion that was in “voting” status. Fourth, the status returns to “null” when the agent occupying the role of the chair declares the outcome of the motion that was in “voted” status. 
+Description - “status”: We aim to determine the status of a motion. By default, every motion’s status is null. First, a motion’s status becomes proposed when an agent proposes the motion, provided that the status of the motion is null. Second, the status changes to voting when an agent seconds the motion that was previously proposed. Third, the status becomes voted when the agent occupying the role of the chair closes the ballot on the motion that was in voting status. Fourth, the status returns to null when the agent occupying the role of the chair declares the outcome of the motion that was in voted status. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 Prompt VP-R2:
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Given the description below, provide the rules in the language of RTEC. You may use the built-in events of RTEC, the VP events, and the VP background knowledge predicate. You may also use any of the VP output fluents that you have already specified. 
+Given the description below, provide the rules in the language of RTEC. You may use the built-in events of RTEC, the VP events, and the VP background knowledge predicate. You may also use any of the VP output fluents, i.e. the fluents that we will define together.
 
-Description - “voted”: We aim to record the way each agent has voted. Casting a vote, i.e., “aye” or “nay” is recorded provided that the status of the motion in question is “voting”. An agent’s vote is set to “null” when a new voting round begins, i.e., when the status of the motion becomes “null”. 
+Description - “voted”: We aim to record the way each agent has voted. Casting a vote, i.e., aye or nay, is recorded provided that the status of the motion in question is voting. An agent’s vote is set to null when a new voting round begins, i.e., when the status of the motion becomes null. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 Prompt VP-R3:
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Given the description below, provide the rules in the language of RTEC. You may use the built-in events of RTEC, the VP events, and the VP background knowledge predicate. You may also use any of the VP output fluents that you have already specified. 
+Given the description below, provide the rules in the language of RTEC. You may use the built-in events of RTEC, the VP events, and the VP background knowledge predicate. You may also use any of the VP output fluents, i.e. the fluents that we will define together.
 
-Description - “outcome”: We aim to record the outcome of the voting procedure concerning a motion. The outcome of the voting procedure, i.e., “carried” or “not carried” is declared by the agent occupying the role of the chair, provided that the status of the motion in question is “voted”. The outcome of the voting procedure is considered to stop being “carried” or “not carried” when the status of a motion starts being “proposed”. 
+Description - “outcome”: We aim to record the outcome of the voting procedure concerning a motion. The outcome of the voting procedure, i.e., carried or not carried is declared by the agent occupying the role of the chair, provided that the status of the motion in question is voted. The outcome of the voting procedure is considered to stop being carried or not carried when the status of a motion starts being proposed. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 Prompt VP-R4:
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Given the description below, provide the rules in the language of RTEC. You may use the built-in events of RTEC, the VP events, and the VP background knowledge predicate. You may also use any of the VP output fluents that you have already specified. 
+Given the description below, provide the rules in the language of RTEC. You may use the built-in events of RTEC, the VP events, and the VP background knowledge predicate. You may also use any of the VP output fluents, i.e. the fluents that we will define together.
 
-Description - “pow”: We aim to identify the conditions in which agents have the institutional power to perform specific actions concerning a motion. First, an agent is empowered to propose a motion as long as the status of the motion is “null”. Second, an agent is empowered to second a motion as long as the status of the motion is “proposed”. Third, an agent is empowered to cast a vote as long as the status of the motion is “voting”. Fourth, the agent occupying the role of the chair is empowered to close the ballot as long as the status of the motion is “voting”. Fifth, the chair is empowered to declare the voting outcome for the motion as long as the status of the motion is “voted”.  
+Description - “pow”: We aim to identify the conditions in which agents have the institutional power to perform specific actions concerning a motion. First, an agent is empowered to propose a motion as long as the status of the motion is null. Second, an agent is empowered to second a motion as long as the status of the motion is proposed. Third, an agent is empowered to cast a vote as long as the status of the motion is voting. Fourth, the agent occupying the role of the chair is empowered to close the ballot as long as the status of the motion is voting. Fifth, the chair is empowered to declare the voting outcome for the motion as long as the status of the motion is voted.  

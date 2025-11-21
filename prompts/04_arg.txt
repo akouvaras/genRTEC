@@ -1,93 +1,81 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 Prompt ARG:
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Now, we will start with the specification of the multi-agent argumentation protocol (ARG), i.e., a procedure for the resolution of a dispute. First, we will present the events and input fluents. Second, we will express the rules in natural language and ask for their specification in the language of RTEC. In these specifications, you may use any of the built-in events of RTEC, as well as the ARG events and fluent, as well as the ARG background knowledge predicate. 
+Now, we will start with the specification of the multi-agent argumentation protocol (ARG), i.e., a procedure for the resolution of a dispute. First, we will present the events and input fluent. Second, we will express the protocol rules in natural language and ask for their specification in the language of RTEC. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 Prompt ARG - Events:
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 In addition to the built-in events of RTEC, you may use the following ARG events:
 
-ARG - Event 1: claim(Ag, Q)
-Meaning: Agent “Ag” claims proposition “Q”. 
+ARG - Event 1: claim(Protag, Q)
+Meaning: Protagonist “Protag”, i.e., an agent occupying the role of proponent or opponent, claims proposition “Q”. 
 
-ARG - Event 2: concede(Ag,Q)
-Meaning: Agent “Ag” concedes to proposition “Q”. 
+ARG - Event 2: concede(Protag,Q)
+Meaning: Protagonist “Protag”, i.e., an agent occupying the role of proponent or opponent, concedes to proposition “Q”. 
 
-ARG - Event 3: retract(Ag,Q)
-Meaning: Agent “Ag” retracts its commitment to proposition “Q”. 
+ARG - Event 3: retract(Protag,Q)
+Meaning: Protagonist “Protag”, i.e., an agent occupying the role of proponent or opponent, retracts its commitment to proposition “Q”. 
 
-ARG - Event 4: deny(Ag,Q)
-Meaning: Agent “Ag” denies proposition “Q”. 
+ARG - Event 4: deny(Protag,Q)
+Meaning: Protagonist “Protag”, i.e., an agent occupying the role of proponent or opponent, denies proposition “Q”. 
 
-ARG - Event 5: objected(proponent)
-Meaning: An agent occupying the role of proponent objects to the preceding action. 
+ARG - Event 5: objected
+Meaning: One or more agents object to the preceding action. 
 
-ARG - Event 6: objected(opponent)
-Meaning:  An agent occupying the role of opponent objects to the preceding action. 
-
-ARG - Event 7: objected(determiner)
-Meaning:  The determiner objects to the preceding action. 
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 Prompt ARG - Fluents:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 You may also use the following ARG input fluent:
 
-ARG - Input Fluent 1: timely=ProtagonistRole
-Meaning: It is timely for an agent occupying “ProtagonistRole”  i.e., proponent or opponent, to speak. 
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Prompt ARG-BK:
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-You may also use the following ARG background knowledge predicate:
-
-ARG Background Knowledge - Predicate 1: role_of(Ag, ProtagonistRole)
-Meaning: Agent “Ag” occupies “ProtagonistRole”, i.e. the role of proponent or opponent. 
+ARG - Input Fluent 1: timely=Protag
+Meaning: It is timely for a protagonist “Protag”, i.e., an agent occupying the role of proponent or opponent, to ‘speak’. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 Prompt ARG - R1: 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Given the description below, provide the rules in the language of RTEC. You may use the built-in events of RTEC, the ARG events, the ARG input fluent, and the ARG background knowledge predicate. You may also use any of the ARG output fluents.
+Given the description below, provide the rules in the language of RTEC. You may use the built-in events of RTEC, the ARG events, and the ARG input fluent. You may also use any of the ARG output fluents, i.e. the fluents that we will define together.
 
-Description - “premise - claim”: We aim to identify the effects of a claim. First, the agents occupying a protagonist role, i.e. the role of proponent or opponent, adopt an explicit premise about a proposition “Q”, when an agent occupying this role claims “Q”, and this role does not have an unconfirmed premise about “Q”. Second, the agents occupying a protagonist role adopt an unconfirmed premise about proposition “Q”, when this role does not have an explicit premise about “Q” and an agent occupying the other protagonist role claims “Q”. The aforementioned effects are realized provided that (1) the claim is not objectionable, or (2) no other agent, i.e., an agent occupying the role of proponent, opponent, or determiner, objects to the claim. A description of the conditions in which an action is said to be ‘objectionable’ will be presented later.
+Description - “premise - claim”: We aim to identify the effects of a claim. First, a protagonist adopts an explicit premise about a proposition Q, when this protagonist claims Q, and does not have an unconfirmed premise about Q. Second, a protagonist adopts an unconfirmed premise about proposition Q, when this protagonist does not have an explicit premise about Q and the other protagonist claims Q. The aforementioned effects are realized provided that (1) the claim is not objectionable, or (2) no agent objects to the claim. The conditions in which an action is said to be ‘objectionable’ will be presented later.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 Prompt ARG - R2: 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Given the description below, provide the rules in the language of RTEC. You may use the built-in events of RTEC, the ARG events, the ARG input fluent, and the ARG background knowledge predicate. You may also use any of the ARG output fluents.
+Given the description below, provide the rules in the language of RTEC. You may use the built-in events of RTEC, the ARG events, and the ARG input fluent. You may also use any of the ARG output fluents, i.e. the fluents that we will define together.
 
-Description - “premise - concession”: We aim to identify the effects of a concession. The agents occupying a protagonist role, i.e. the role of proponent or opponent, adopt an explicit premise about proposition “Q”, when an agent occupying this role concedes to “Q”, provided that this role has an unconfirmed premise that “Q”. The aforementioned effects are realized provided that (1) the concession is not objectionable, or (2) no other agent, i.e., an agent occupying the role of proponent, opponent, or determiner, objects to the concession. A description of the conditions in which an action is said to be ‘objectionable’ will be presented later.
+Description - “premise - concession”: We aim to identify the effects of a concession. A protagonist adopts an explicit premise about proposition Q, when this protagonist concedes to Q, provided this protagonist has an unconfirmed premise about Q. The aforementioned effects are realized provided that (1) the concession is not objectionable, or (2) no agent objects to the concession. The conditions in which an action is said to be ‘objectionable’ will be presented later. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 Prompt ARG - R3: 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Given the description below, provide the rules in the language of RTEC. You may use the built-in events of RTEC, the ARG events, the ARG input fluent, and the ARG background knowledge predicate. You may also use any of the ARG output fluents.
+Given the description below, provide the rules in the language of RTEC. You may use the built-in events of RTEC, the ARG events, and the ARG input fluent. You may also use any of the ARG output fluents, i.e. the fluents that we will define together.
 
-Description - “premise - retraction”: We aim to identify the effects of a retraction. First, the agents occupying a protagonist role, i.e. the role of proponent or opponent, no longer have an explicit premise about proposition “Q”, when an agent occupying this role retracts “Q”. Second, the agents occupying a protagonist role, i.e. the role of proponent or opponent, no longer have an unconfirmed premise that “Q”, when an agent occupying the other protagonist role retracts “Q”. The aforementioned effects are realized provided that (1) the retraction is not objectionable, or (2) no other agent, i.e., an agent occupying the role of proponent, opponent, or determiner, objects to the retraction. A description of the conditions in which an action is said to be ‘objectionable’ will be presented later.
+Description - “premise - retraction”: We aim to identify the effects of a retraction. First, a protagonist no longer has an explicit premise about proposition Q when this protagonist retracts its commitment to Q. Second, a protagonist no longer has an unconfirmed premise about proposition Q when the other protagonist retracts its commitment to Q. The aforementioned effects are realized provided that (1) the retraction is not objectionable, or (2) no agent objects to the retraction. The conditions in which an action is said to be ‘objectionable’ will be presented later.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 Prompt ARG - R4: 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Given the description below, provide the rules in the language of RTEC. You may use the built-in events of RTEC, the ARG events, the ARG input fluent, and the ARG background knowledge predicate. You may also use any of the ARG output fluents.
+Given the description below, provide the rules in the language of RTEC. You may use the built-in events of RTEC, the ARG events, and the ARG input fluent. You may also use any of the ARG output fluents, i.e. the fluents that we will define together.
 
-Description - “premise - denial”: We aim to identify the effects of a denial. The agents occupying a protagonist role, i.e. the role of proponent or opponent, no longer have an unconfirmed premise about “Q”, when an agent occupying this role denies “Q”. The aforementioned effects are realized provided that (1) the denial is not objectionable, or (2) no other agent, i.e., an agent occupying the role of proponent, opponent, or determiner, objects to the denial. A description of the conditions in which an action is said to be ‘objectionable’ will be presented later.
+Description - “premise - denial”: We aim to identify the effects of a denial. A protagonist no longer has an unconfirmed premise about proposition Q, when this protagonist denies Q. The aforementioned effects are realized provided that (1) the denial is not objectionable, or (2) no agent objects to the denial. The conditions in which an action is said to be ‘objectionable’ will be presented later.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 Prompt ARG - R5: 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Given the description below, provide the rules in the language of RTEC. You may use the built-in events of RTEC, the ARG events, the ARG input fluent, and the ARG background knowledge predicate. You may also use any of the ARG output fluents.
+Given the description below, provide the rules in the language of RTEC. You may use the built-in events of RTEC, the ARG events, and the ARG input fluent. You may also use any of the ARG output fluents, i.e. the fluents that we will define together.
 
-Description - “proper”: We aim to identify the maximal intervals during which an action is considered proper for a protagonist role. First, a claim of a proposition “Q” by an agent with a protagonist role is considered proper as long as this role has neither an explicit nor an unconfirmed premise about “Q”. Second, a concession to a proposition “Q” by an agent with a protagonist role is considered proper as long as this role has an unconfirmed premise about “Q”. Third, a retraction of a proposition “Q” by an agent with a protagonist role is considered proper as long as this role has an explicit premise about “Q”. Fourth, a denial of a proposition “Q” by an agent with a protagonist role is considered proper as long as this role has an unconfirmed premise about “Q”. 
+Description - “proper”: We aim to identify the maximal intervals during which an action is considered proper for a protagonist. First, a claim of a proposition Q by a protagonist is considered proper as long as this protagonist has neither an explicit nor an unconfirmed premise about Q. Second, a concession to a proposition Q by a protagonist is considered proper as long as this protagonist has an unconfirmed premise about Q. Third, a retraction of a proposition Q by a protagonist is considered proper as long as this protagonist has an explicit premise about Q. Fourth, a denial of a proposition Q by a protagonist is considered proper as long as this protagonist has an unconfirmed premise about Q. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 Prompt ARG - R6: 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Given the description below, provide the rules in the language of RTEC. You may use the built-in events of RTEC, the ARG events, the ARG input fluent, and the ARG background knowledge predicate. You may also use any of the ARG output fluents.
+Given the description below, provide the rules in the language of RTEC. You may use the built-in events of RTEC, the ARG events, and the ARG input fluent. You may also use any of the ARG output fluents, i.e. the fluents that we will define together.
 
-Description - “objectionable”: We aim to identify the maximal intervals during which an action is considered objectionable for a protagonist role. First, a claim of a proposition “Q”  by an agent with a protagonist role is considered objectionable as long as the claim is proper and it is not timely for an agent occupying this role to speak. Second, a concession to a proposition “Q” by an agent with a protagonist role is considered objectionable as long as the concession is proper and it is not timely for an agent occupying this role to speak. Third, a retraction of a proposition “Q” by an agent with a protagonist role is considered objectionable as long as the retraction is proper and it is not timely for an agent occupying this role to speak. Fourth, a denial of a proposition “Q” by an agent with a protagonist role is considered objectionable as long as the denial is proper and it is not timely for an agent occupying this role to speak. 
+Description - “objectionable”: We aim to identify the maximal intervals during which an action is considered objectionable for a protagonist. First, a claim of a proposition Q by a protagonist is considered objectionable as long as the claim is proper, and it is not timely for this protagonist to speak. Second, a concession to proposition Q by a protagonist is considered objectionable as long as the concession is proper, and it is not timely for this protagonist to speak. Third, a retraction of a proposition Q by a protagonist is considered objectionable as long as the retraction is proper, and it is not timely for this protagonist to speak. Fourth, a denial of a proposition Q by a protagonist is considered objectionable as long as the denial is proper, and it is not timely for this protagonist to speak. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 Prompt ARG - R7: 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Given the description below, provide the rules in the language of RTEC. You may use the built-in events of RTEC, the ARG events, the ARG input fluent, and the ARG background knowledge predicate. You may also use any of the ARG output fluents.
+Given the description below, provide the rules in the language of RTEC. You may use the built-in events of RTEC, the ARG events, and the ARG input fluent. You may also use any of the ARG output fluents, i.e. the fluents that we will define together.
 
-Description - “sanctioned”: We aim to identify whether an agent is sanctioned. First, an agent starts being sanctioned when this agent claims a proposition “Q”, while the claim is considered objectionable for the role that the agent occupies. Second, an agent starts being sanctioned when this agent concedes to a proposition “Q”, while the concession is considered objectionable for the role that the agent occupies. Third, an agent starts being sanctioned when this agent retracts a proposition “Q”, while the retraction is considered objectionable for the role that the agent occupies. Fourth, an agent starts being sanctioned when this agent denies a proposition “Q”, while the denial is considered objectionable for the role that the agent occupies. 
+Description - “sanctioned”: We aim to identify whether a protagonist is sanctioned. First, a protagonist starts being sanctioned when this protagonist claims a proposition Q, while the claim is considered objectionable for this protagonist. Second, a protagonist starts being sanctioned when this protagonist concedes to a proposition Q, while the concession is considered objectionable for this protagonist. Third, a protagonist starts being sanctioned when this protagonist retracts its commitment to proposition Q, while the retraction is considered objectionable for this protagonist. Fourth, a protagonist starts being sanctioned when this protagonist denies a proposition Q, while the denial is considered objectionable for this protagonist. 

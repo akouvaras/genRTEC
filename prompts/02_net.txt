@@ -1,7 +1,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 Prompt NET:
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Now, we will start with the specification of the multi-agent negotiation protocol “Netbill”, i.e., an e-commerce procedure in which consumers and merchants negotiate over digital goods (NET). First, we will present the events and the background knowledge predicates. Second, we will express the rules in natural language and ask for their specification in the language of RTEC. In these specifications, you may use any of the built-in events of RTEC, the NET events, as well as the NET background knowledge predicates.
+Now, we will start with the specification of the multi-agent negotiation protocol “Netbill”, i.e., an e-commerce procedure in which consumers and merchants negotiate over digital goods (NET). First, we will present the events. Second, we will present the predicates expressing the background knowledge. Third, we will provide the protocol rules in natural language and ask for their specification in the language of RTEC. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 Prompt NET-Events:
@@ -40,41 +40,41 @@ Meaning: The decrypted goods refer to the items described as “GD”.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 Prompt NET-R1:
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Given the description below, provide the rules in the language of RTEC. You may use the built-in events of RTEC, the NET events, and the NET background knowledge predicates. You may also use any of the NET output fluents that you have already specified. 
+Given the description below, provide the rules in the language of RTEC. You may use the built-in events of RTEC, the NET events, and the NET background knowledge predicates. You may also use any of the NET output fluents, i.e. the fluents that we will define together.
 
 Description - “quote”: We aim to identify the maximal intervals during which there is a quote between a merchant and a consumer about a set of goods. A quote between a merchant and a consumer for a set of goods starts being in effect when the merchant presents the quote to the consumer. The quote between a merchant and a consumer for a set of goods expires upon the consumer’s acceptance. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 Prompt NET-R2:
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Given the description below, provide the rules in the language of RTEC. You may use the built-in events of RTEC, the NET events, and the NET background knowledge predicates. You may also use any of the NET output fluents that you have already specified. 
+Given the description below, provide the rules in the language of RTEC. You may use the built-in events of RTEC, the NET events, and the NET background knowledge predicates. You may also use any of the NET output fluents, i.e. the fluents that we will define together.
 
-Description - “per”: We aim to identify whether a merchant has the permission for a certain action, i.e., to present a quote to a consumer. A merchant starts having the permission to present a quote to a consumer about any type of good when the consumer requests a quote. The merchant stops having the permission to present a quote to a consumer when the merchant has already provided one. 
+Description - “per”: We aim to identify whether a merchant has the permission for a certain action, i.e., to present a quote to a consumer. A merchant starts having the permission to present a quote to a consumer about any type of good when the consumer requests a quote. The merchant stops having the permission to present a quote to a consumer when the merchant has already provided one.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 Prompt NET-R3:
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Given the description below, provide the rules in the language of RTEC. You may use the built-in events of RTEC, the NET events, and the NET background knowledge predicates. You may also use any of the NET output fluents that you have already specified. 
+Given the description below, provide the rules in the language of RTEC. You may use the built-in events of RTEC, the NET events, and the NET background knowledge predicates. You may also use any of the NET output fluents, i.e. the fluents that we will define together.
 
-Description - “contract”: We aim to identify whether a contract has been established between a merchant and a consumer regarding a set of goods. A contract between a merchant and a consumer starts being established when there is a quote from the merchant to the consumer and the consumer accepts it, provided that neither the merchant nor the consumer is suspended from occupying a certain role, i.e., a merchant or a consumer.
+Description - “contract”: We aim to identify whether a contract has been established between a merchant and a consumer regarding a set of goods. A contract between a merchant and a consumer starts being established when there is a quote from the merchant to the consumer and the consumer accepts it, provided that neither the merchant nor the consumer is suspended from occupying a certain role, i.e., a merchant or a consumer. The conditions in which a merchant or a consumer is said to be ‘suspended’ will be presented later.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 Prompt NET-R4:
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Given the description below, provide the rules in the language of RTEC. You may use the built-in events of RTEC, the NET events, and the NET background knowledge predicates. You may also use any of the NET output fluents that you have already specified. 
+Given the description below, provide the rules in the language of RTEC. You may use the built-in events of RTEC, the NET events, and the NET background knowledge predicates. You may also use any of the NET output fluents, i.e. the fluents that we will define together.
 
-Description - “obl”: We aim to identify whether there is a set of obligations on the contracting parties, i.e., the merchant and the consumer. First, the consumer starts being obliged to send an electronic payment order to the Intermediation Server “iServer” when the contract between the merchant and the consumer starts being in effect. The consumer stops being obliged to pay the agreed price to the contracting merchant when (1) the consumer has already sent the electronic payment order to the Intermediation Server “iServer” and the payment corresponds to the requested price concerning the described goods, or (2) when the contract ends being in effect. Second, the merchant starts being obliged to send the goods to the Intermediation Server “iServer” when the contract starts being in effect. The merchant stops being obliged to send the goods to the Intermediation Server “iServer” when (1) the goods have already been decrypted, and it is confirmed that they correspond to the items described in the set of goods, or (2) when the contract ends being in effect.
+Description - “obl”: We aim to identify whether there is a set of obligations on the contracting parties, i.e., the merchant and the consumer. First, the consumer starts being obliged to send an electronic payment order to the Intermediation Server (iServer) when the contract between the merchant and the consumer starts being in effect. The consumer stops being obliged to pay the agreed price to the contracting merchant when (1) the consumer has already sent the electronic payment order to the Intermediation Server (iServer) and the payment corresponds to the requested price concerning the described goods, or (2) when the contract ends being in effect. Second, the merchant starts being obliged to send the goods to the Intermediation Server (iServer) when the contract starts being in effect. The merchant stops being obliged to send the goods to the Intermediation Server (iServer) when (1) the goods have already been decrypted, and it is confirmed that they correspond to the items described in the set of goods, or (2) when the contract ends being in effect.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 Prompt NET-R5:
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Given the description below, provide the rules in the language of RTEC. You may use the built-in events of RTEC, the NET events, and the NET background knowledge predicates. You may also use any of the NET output fluents that you have already specified. 
+Given the description below, provide the rules in the language of RTEC. You may use the built-in events of RTEC, the NET events, and the NET background knowledge predicates. You may also use any of the NET output fluents, i.e. the fluents that we will define together.
 
-Description - “suspended”: We aim to identify the maximal intervals during which a party of a contract has been suspended from occupying a certain role, i.e., a merchant or a consumer. First, an agent starts being suspended from acting as a merchant when he presents a quote without the permission to do so. Second, an agent starts being suspended from acting as a merchant when the contract between the merchant and the consumer ends, and the agent still has the obligation to send the goods. Third, an agent starts being suspended from acting as a consumer when the contract between the merchant and the consumer ends, and the agent still has the obligation to send the electronic payment order.
+Description - “suspended”: We aim to identify the maximal intervals during which a party of a contract has been suspended from occupying a certain role, i.e., a merchant or a consumer. First, an agent starts being suspended from acting as a merchant when he presents a quote without permission to do so. Second, an agent starts being suspended from acting as a merchant when the contract between the merchant and the consumer ends, and the agent still has the obligation to send the goods. Third, an agent starts being suspended from acting as a consumer when the contract between the merchant and the consumer ends, and the agent still has the obligation to send the electronic payment order.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 Prompt NET-R6:
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Given the description below, provide the rules in the language of RTEC. You may use the built-in events of RTEC, the NET events, and the NET background knowledge predicates. You may also use any of the NET output fluents that you have already specified. 
+Given the description below, provide the rules in the language of RTEC. You may use the built-in events of RTEC, the NET events, and the NET background knowledge predicates. You may also use any of the NET output fluents, i.e. the fluents that we will define together.
 
 Description - “pow”: We aim to identify the maximal intervals during which a consumer has the institutional power to accept a quote from a merchant concerning some goods. A consumer is empowered to accept a quote from a merchant concerning some goods as long as the quote exists and neither the agent occupying the role of the merchant nor the agent occupying the role of the consumer is suspended. 

@@ -1,7 +1,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 Prompt RTEC-1:
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-You are an assistant in constructing rules in the language of the Run-Time Event Calculus (RTEC), given a composite activity description in natural language. The Event Calculus is a logic-based formalism for representing and reasoning about events and their effects. The Run-Time Event Calculus (RTEC) is a Prolog programming implementation of the Event Calculus, that has been optimised for composite activity recognition. Below, we summarise the language of RTEC. 
+You are an assistant in constructing rules in the language of the Run-Time Event Calculus (RTEC), given a description in natural language. The Event Calculus is a logic-based formalism for representing and reasoning about events and their effects. The Run-Time Event Calculus (RTEC) is a Prolog programming implementation of the Event Calculus, that has been optimised for composite activity recognition. Below, we summarise the language of RTEC. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 Prompt RTEC-2:
@@ -120,7 +120,7 @@ terminatedAt(stopped(Vessel)=_Status, T) :-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 Prompt RTEC-SDF1:
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-The second way in which a composite activity may be defined in the language of RTEC concerns statically determined fluents. In this case, a composite activity definition may be specified by means of a rule with “holdsFor(F=V, I)” in its head. The body of such a rule may include “holdsFor” conditions for fluents other than F, as well as some of the interval manipulation constructs of RTEC, i.e. “union_all”, “intersect_all”, and “relative_complement_all”. In some cases, a “holdsFor(F=V, I)” rule may include predicates expressing background knowledge. A rule with “holdsFor(F=V, I)” in the head is called a statically determined fluent definition. Below you may find two examples of composite maritime activities expressed as statically determined fluents. 
+The second way in which a composite activity may be defined in the language of RTEC concerns statically determined fluents. In this case, a composite activity definition may be specified by means of a rule with “holdsFor(F=V, I)” in its head. The body of such a rule may include “holdsFor” conditions for fluents other than F, as well as some of the interval manipulation constructs of RTEC, i.e. “union_all”, “intersect_all”, “relative_complement_all”, and “complement_all”. In some cases, a “holdsFor(F=V, I)” rule may include predicates expressing background knowledge. A rule with “holdsFor(F=V, I)” in the head is called a statically determined fluent definition. Below you may find two examples of composite maritime activities expressed as statically determined fluents. 
 
 Example 1: Given the description below, provide the rules in the language of RTEC.
  

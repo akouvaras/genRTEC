@@ -1,7 +1,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 Prompt MSA:
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Now, we will start with the generation of the composite activity definitions for maritime situational awareness (MSA). First, we will present the events and input fluents. Second, we will present the predicates expressing the background knowledge. Third, we will provide the composite activity definitions in natural language and ask for their specification in the language of RTEC. In these specifications, you may use any of the built-in events of RTEC, the MSA events and fluents, as well as the MSA background knowledge predicates.
+Now, we will start with the generation of the composite activity definitions for maritime situational awareness (MSA). First, we will present the events and input fluents. Second, we will present the predicates expressing the background knowledge. Third, we will provide the composite activity definitions in natural language and ask for their specification in the language of RTEC.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 Prompt MSA-Events:
@@ -111,62 +111,62 @@ Meaning: List “I” includes each interval of list “Ii” that has a duratio
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 Prompt MSA-R1:
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Given the description below, provide the rules in the language of RTEC. You may use the built-in events of RTEC, the MSA events, the MSA input fluents, and the MSA background knowledge predicates. You may also use any of the MSA output fluents that you have already specified. 
+Given the description below, provide the rules in the language of RTEC. You may use the built-in events of RTEC, the MSA events, the MSA input fluents, and the MSA background knowledge predicates. You may also use any of the MSA output fluents, i.e. the fluents that we will define together.
 
 Description - “gap”: A communication gap starts when we stop receiving messages from a vessel. This may occur when the vessel enters an area without a nearby AIS base station. A communication gap may take place either (i) near a port, or (ii) far from all ports. The communication gap stops once message reception from the vessel resumes. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 Prompt MSA-R2:
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Given the description below, provide the rules in the language of RTEC. You may use the built-in events of RTEC, the MSA events, the MSA input fluents, and the MSA background knowledge predicates. You may also use any of the MSA output fluents that you have already specified. 
+Given the description below, provide the rules in the language of RTEC. You may use the built-in events of RTEC, the MSA events, the MSA input fluents, and the MSA background knowledge predicates. You may also use any of the MSA output fluents, i.e. the fluents that we will define together.
 
 Description - “highSpeedNearCoast”: We aim to identify the maximal intervals during which a vessel sails at high speed near the coast. A vessel is considered to start sailing at high speed near the coast when its speed exceeds the regulated speed limit in coastal waters. The vessel is considered to stop sailing at high speed near the coast in two cases: (1) when the vessel’s speed is within the regulated limit, or (2) when the vessel stops being within the coastal area.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 Prompt MSA-R3:
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Given the description below, provide the rules in the language of RTEC. You may use the built-in events of RTEC, the MSA events, the MSA input fluents, and the MSA background knowledge predicates. You may also use any of the MSA output fluents that you have already specified. 
+Given the description below, provide the rules in the language of RTEC. You may use the built-in events of RTEC, the MSA events, the MSA input fluents, and the MSA background knowledge predicates. You may also use any of the MSA output fluents, i.e. the fluents that we will define together.
 
 Description - “trawling”: Trawling is a common fishing activity in which a vessel pulls a fishing net through the water. A trawler typically maintains a steady speed - known as trawling speed - and exhibits a wide range of heading angles. To identify the time intervals during which a vessel is engaged in trawling, we begin by detecting the intervals during which the vessel is moving at a typical trawling speed. A vessel that sails within a designated fishing area is considered to start having a trawling speed when its speed falls within the expected range. Furthermore, the vessel is considered to stop having a trawling speed when (1) its speed falls outside the expected range, (2) a communication gap starts, or (3) the vessel stops being within the fishing area. Additionally, we must identify the intervals during which the vessel’s movement is characteristic of trawling. More precisely, the movement of the vessel starts to be characteristic of trawling when the vessel changes its heading while remaining in a fishing area, and stops being characteristic of trawling when the vessel leaves that area. The vessel is considered to be engaged in trawling only when it is sailing with a trawling speed and exhibiting movement patterns typical of trawling. Moreover, trawling activities must exceed a minimum duration and cannot be arbitrarily brief.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 Prompt MSA-R4:
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Given the description below, provide the rules in the language of RTEC. You may use the built-in events of RTEC, the MSA events, the MSA input fluents, and the MSA background knowledge predicates. You may also use any of the MSA output fluents that you have already specified. 
+Given the description below, provide the rules in the language of RTEC. You may use the built-in events of RTEC, the MSA events, the MSA input fluents, and the MSA background knowledge predicates. You may also use any of the MSA output fluents, i.e. the fluents that we will define together.
 
-Description - “lowSpeed”: We want to identify the intervals during which a vessel sails at low speed. A vessel is said to start sailing at a low speed when a “slow motion start” event is detected. Furthermore, the vessel is said to stop sailing at a low speed when (1) a “slow motion end” event is detected, or (2) a communication gap starts. 
+Description - “lowSpeed”: We want to identify the intervals during which a vessel sails at low speed. A vessel is said to start sailing at a low speed when a slow-motion start event is detected. Furthermore, the vessel is said to stop sailing at a low speed when (1) a slow-motion end event is detected, or (2) a communication gap starts. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 Prompt MSA-R5:
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Given the description below, provide the rules in the language of RTEC. You may use the built-in events of RTEC, the MSA events, the MSA input fluents, and the MSA background knowledge predicates. You may also use any of the MSA output fluents that you have already specified. 
+Given the description below, provide the rules in the language of RTEC. You may use the built-in events of RTEC, the MSA events, the MSA input fluents, and the MSA background knowledge predicates. You may also use any of the MSA output fluents, i.e. the fluents that we will define together.
 
 Description - “tugging”: Tugging is an operation in which a vessel - typically one that cannot or should not move on its own, such as a vessel in a crowded harbor or a narrow canal - is pulled or towed by a tugboat. To identify the time intervals during which a vessel is engaged in tugging, we begin by detecting the intervals during which the vessel is moving at a typical tugging speed. A vessel is considered to start having a tugging speed when its speed falls within the expected range. Furthermore, the vessel is said to stop having a tugging speed when (1) its speed falls outside the expected range, or (2) a communication gap starts. Two vessels are considered to be engaged in tugging if the following conditions are met: exactly one of the vessels is a tugboat, neither vessel is a pilot boat, they are sailing close to each other, and both vessels are moving within the expected speed range. Tugging operations must also meet a minimum duration requirement – they cannot be arbitrarily brief. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 Prompt MSA-R6:
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Given the description below, provide the rules in the language of RTEC. You may use the built-in events of RTEC, the MSA events, the MSA input fluents, and the MSA background knowledge predicates. You may also use any of the MSA output fluents that you have already specified. 
+Given the description below, provide the rules in the language of RTEC. You may use the built-in events of RTEC, the MSA events, the MSA input fluents, and the MSA background knowledge predicates. You may also use any of the MSA output fluents, i.e. the fluents that we will define together.
 
 Description - “inSAR”: A vessel may perform a search-and-rescue (SAR) operation. To identify the time intervals during which a vessel is engaged in SAR operations, we begin by detecting the intervals during which the vessel is sailing at SAR speed. A vessel is considered to start having a SAR speed when its speed falls within the expected range. Furthermore, the vessel is considered to stop having a SAR speed when (1) its speed falls below the minimum speed threshold, or (2) a communication gap starts. Additionally, we must identify intervals when the vessel’s movement is characteristic of SAR. More precisely, the movement of the vessel starts to be characteristic of SAR when the vessel changes its speed or its heading, and stops being characteristic of SAR when a communication gap starts. The vessel is considered to be engaged in SAR only when it is sailing with a SAR speed and exhibiting movement patterns typical of SAR. Moreover, SAR operations must exceed a minimum duration and cannot be arbitrarily brief.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 Prompt MSA-R7:
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Given the description below, provide the rules in the language of RTEC. You may use the built-in events of RTEC, the MSA events, the MSA input fluents, and the MSA background knowledge predicates. You may also use any of the MSA output fluents that you have already specified. 
+Given the description below, provide the rules in the language of RTEC. You may use the built-in events of RTEC, the MSA events, the MSA input fluents, and the MSA background knowledge predicates. You may also use any of the MSA output fluents, i.e. the fluents that we will define together.
 
 Description - “anchoredOrMoored”: A vessel may lower its anchor in designated anchorage areas – for instance, while waiting to enter a port or to load or unload cargo or passengers in locations lacking sufficient port facilities. Additionally, a vessel may be moored, meaning it is secured with the use of ropes to a fixed structure such as a quay or dock. A vessel is anchored or moored as long as it is idle in an anchorage area, and it is far from all ports, or it is idle near some port. To be classified as anchored or moored, these idle periods must exceed a minimum duration; brief stops are not considered valid instances of this activity. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 Prompt MSA-R8:
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Given the description below, provide the rules in the language of RTEC. You may use the built-in events of RTEC, the MSA events, the MSA input fluents, and the MSA background knowledge predicates. You may also use any of the MSA output fluents that you have already specified. 
+Given the description below, provide the rules in the language of RTEC. You may use the built-in events of RTEC, the MSA events, the MSA input fluents, and the MSA background knowledge predicates. You may also use any of the MSA output fluents, i.e. the fluents that we will define together.
 
 Description - “pilotOps”: During piloting, a maritime pilot – an expert in navigating specific areas – approaches a vessel using a pilot boat, boards it, and guides it through hazardous or congested waters. Piloting lasts as long as two vessels, one of which is a pilot boat, are sailing close, both moving at low speed or remaining idle far from any ports, and are not within a coastal area. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 Prompt MSA-R9:
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Given the description below, provide the rules in the language of RTEC. You may use the built-in events of RTEC, the MSA events, the MSA input fluents, and the MSA background knowledge predicates. You may also use any of the MSA output fluents that you have already specified. 
+Given the description below, provide the rules in the language of RTEC. You may use the built-in events of RTEC, the MSA events, the MSA input fluents, and the MSA background knowledge predicates. You may also use any of the MSA output fluents, i.e. the fluents that we will define together.
 
 Description - “loitering”: Loitering refers to the act of remaining in a specific area for an extended period without a clear purpose. Loitering lasts as long as the vessel is moving at low speed or remains idle far from all ports, is not near the coast area, and is neither anchored nor moored. The duration of loitering must exceed a minimum threshold – brief stops are not sufficient. 
