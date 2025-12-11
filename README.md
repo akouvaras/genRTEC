@@ -17,7 +17,7 @@ For more information and feedback, do not hesitate adding an issue in this repos
 │   ├── 03_vp.txt
 │   ├── 04_arg.txt
 │   ├── 05_msa.txt
-│   ├── 06_ar.txt
+│   ├── 06_acr.txt
 │   ├── 07_ctm.txt
 │   └── 08_cg.txt
 │
