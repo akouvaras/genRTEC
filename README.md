@@ -6,7 +6,7 @@ This program comes with ABSOLUTELY NO WARRANTY. This is free software, and you a
 
 # Feedback 
 
-For more information and feedback, do not hesitate sending us an email or adding an issue in this repository.
+For more information and feedback, do not hesitate sending us an [email](a.kouvaras@unipi.gr) or adding an issue in this repository.
 
 # Instructions for reproducing the experiments
 ## 1. Generating LLM Rules
