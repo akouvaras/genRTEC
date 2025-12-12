@@ -1,20 +1,4 @@
-/****************************************
-  AGENT ACTIONS 	                                             
-  propose(Agent, Motion)           
-  second(Agent, Motion)           
-  vote(Agent, Motion, aye)      	
-  vote(Agent, Motion, nay)      			
-  close_ballot(Agent, Motion)          
-  declare(Agent, Motion, carried/not_carried)	
- ****************************************/                          
 
-/********************************
-  PROTOCOL FLOW 
-  propose(Ag,M), second(Ag,M), vote(V1,M,Vote),...,vote(Vn,M,Vote),
-  close_ballot(C,M), declare(C, M, Outcome)
-
-  agents start voting as soon as there is a secondment, ie there is no open_ballot
- ********************************/
 
 /*********************
       status(M)
