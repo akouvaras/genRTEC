@@ -15,7 +15,7 @@ For more information and feedback, do not hesitate adding an issue in this repos
 ### Directory Structure
 ```bash
 .
-├── prompts/                    # Prompts for each application
+├── prompts/                   
 │   ├── 01_introducing_rtec.txt
 │   ├── 02_net.txt
 │   ├── 03_vp.txt
@@ -26,53 +26,203 @@ For more information and feedback, do not hesitate adding an issue in this repos
 │   └── 08_cg.txt
 │
 └── rules/                      
-    └── ground_truth/                   # Includes ground-truth rules
-    └── llms/                   # Includes rule sets for Claude, Gemini, GPT
+    └── ground_truth/                  
+    └── llms/                   
         └── claude/
-            └── exp1/           # Experiment 1
-                ├── predictive_accuracy/     # Rules needed for reasoning and computing predictive accuracy using RTEC.
-                └── syntactic_similarity/    # Rules needed for computing syntactic similarity using simLP.
-            └── exp2/           # Experiment 2
-                ├── predictive_accuracy/     # Rules needed for reasoning and computing predictive accuracy using RTEC.
-                └── syntactic_similarity/    # Rules needed for computing syntactic similarity using simLP.
-            └── exp3/           # Experiment 3
-                ├── predictive_accuracy/     # Rules needed for reasoning and computing predictive accuracy using RTEC.
-                └── syntactic_similarity/    # Rules needed for computing syntactic similarity using simLP.
-            └── exp4/           # Experiment 4
-                ├── predictive_accuracy/     # Rules needed for reasoning and computing predictive accuracy using RTEC.
-                └── syntactic_similarity/    # Rules needed for computing syntactic similarity using simLP.
-            └── exp5/           # Experiment 5
-                ├── predictive_accuracy/     # Rules needed for reasoning and computing predictive accuracy using RTEC.
-                └── syntactic_similarity/    # Rules needed for computing syntactic similarity using simLP.
+            └── exp1/       
+                ├── predictive_accuracy/    
+                    ├── acr.prolog
+                    ├── ctm.prolog
+                    ├── msa.prolog
+                    ├── net.prolog
+                    └── vp.prolog
+                └── syntactic_similarity/   
+                    ├── acr.prolog
+                    ├── ctm.prolog
+                    ├── msa.prolog
+                    ├── net.prolog
+                    └── vp.prolog
+            └── exp2/           
+                ├── predictive_accuracy/     
+                    ├── acr.prolog
+                    ├── ctm.prolog
+                    ├── msa.prolog
+                    ├── net.prolog
+                    └── vp.prolog
+                └── syntactic_similarity/   
+                    ├── acr.prolog
+                    ├── ctm.prolog
+                    ├── msa.prolog
+                    ├── net.prolog
+                    └── vp.prolog
+            └── exp3/          
+                ├── predictive_accuracy/    
+                    ├── acr.prolog
+                    ├── ctm.prolog
+                    ├── msa.prolog
+                    ├── net.prolog
+                    └── vp.prolog
+                └── syntactic_similarity/   
+                    ├── acr.prolog
+                    ├── ctm.prolog
+                    ├── msa.prolog
+                    ├── net.prolog
+                    └── vp.prolog
+            └── exp4/           
+                ├── predictive_accuracy/     
+                    ├── acr.prolog
+                    ├── ctm.prolog
+                    ├── msa.prolog
+                    ├── net.prolog
+                    └── vp.prolog
+                └── syntactic_similarity/    
+                    ├── acr.prolog
+                    ├── ctm.prolog
+                    ├── msa.prolog
+                    ├── net.prolog
+                    └── vp.prolog
+            └── exp5/           
+                ├── predictive_accuracy/     
+                    ├── acr.prolog
+                    ├── ctm.prolog
+                    ├── msa.prolog
+                    ├── net.prolog
+                    └── vp.prolog
+                └── syntactic_similarity/    
+                    ├── acr.prolog
+                    ├── ctm.prolog
+                    ├── msa.prolog
+                    ├── net.prolog
+                    └── vp.prolog
         └── gemini/
-            └── exp1/           # Experiment 1
-                ├── predictive_accuracy/     # Rules needed for reasoning and computing predictive accuracy using RTEC.
-                └── syntactic_similarity/    # Rules needed for computing syntactic similarity using simLP.
-            └── exp2/           # Experiment 2
-                ├── predictive_accuracy/     # Rules needed for reasoning and computing predictive accuracy using RTEC.
-                └── syntactic_similarity/    # Rules needed for computing syntactic similarity using simLP.
-            └── exp3/           # Experiment 3
-                ├── predictive_accuracy/     # Rules needed for reasoning and computing predictive accuracy using RTEC.
-                └── syntactic_similarity/    # Rules needed for computing syntactic similarity using simLP.
-            └── exp4/           # Experiment 4
-                ├── predictive_accuracy/     # Rules needed for reasoning and computing predictive accuracy using RTEC.
-                └── syntactic_similarity/    # Rules needed for computing syntactic similarity using simLP.
-            └── exp5/           # Experiment 5
-                ├── predictive_accuracy/     # Rules needed for reasoning and computing predictive accuracy using RTEC.
-                └── syntactic_similarity/    # Rules needed for computing syntactic similarity using simLP.
+            └── exp1/           
+                ├── predictive_accuracy/     
+                    ├── acr.prolog
+                    ├── ctm.prolog
+                    ├── msa.prolog
+                    ├── net.prolog
+                    └── vp.prolog
+                └── syntactic_similarity/    
+                    ├── acr.prolog
+                    ├── ctm.prolog
+                    ├── msa.prolog
+                    ├── net.prolog
+                    └── vp.prolog
+            └── exp2/           
+                ├── predictive_accuracy/     
+                    ├── acr.prolog
+                    ├── ctm.prolog
+                    ├── msa.prolog
+                    ├── net.prolog
+                    └── vp.prolog
+                └── syntactic_similarity/    
+                    ├── acr.prolog
+                    ├── ctm.prolog
+                    ├── msa.prolog
+                    ├── net.prolog
+                    └── vp.prolog
+            └── exp3/           
+                ├── predictive_accuracy/     
+                    ├── acr.prolog
+                    ├── ctm.prolog
+                    ├── msa.prolog
+                    ├── net.prolog
+                    └── vp.prolog
+                └── syntactic_similarity/    
+                    ├── acr.prolog
+                    ├── ctm.prolog
+                    ├── msa.prolog
+                    ├── net.prolog
+                    └── vp.prolog
+            └── exp4/           
+                ├── predictive_accuracy/    
+                    ├── acr.prolog
+                    ├── ctm.prolog
+                    ├── msa.prolog
+                    ├── net.prolog
+                    └── vp.prolog
+                └── syntactic_similarity/    
+                    ├── acr.prolog
+                    ├── ctm.prolog
+                    ├── msa.prolog
+                    ├── net.prolog
+                    └── vp.prolog
+            └── exp5/           
+                ├── predictive_accuracy/   
+                    ├── acr.prolog
+                    ├── ctm.prolog
+                    ├── msa.prolog
+                    ├── net.prolog
+                    └── vp.prolog
+                └── syntactic_similarity/    
+                    ├── acr.prolog
+                    ├── ctm.prolog
+                    ├── msa.prolog
+                    ├── net.prolog
+                    └── vp.prolog
         └── gpt/
-            └── exp1/           # Experiment 1
-                ├── predictive_accuracy/     # Rules needed for reasoning and computing predictive accuracy using RTEC.
-                └── syntactic_similarity/    # Rules needed for computing syntactic similarity using simLP.
-            └── exp2/           # Experiment 2
-                ├── predictive_accuracy/     # Rules needed for reasoning and computing predictive accuracy using RTEC.
-                └── syntactic_similarity/    # Rules needed for computing syntactic similarity using simLP.
-            └── exp3/           # Experiment 3
-                ├── predictive_accuracy/     # Rules needed for reasoning and computing predictive accuracy using RTEC.
-                └── syntactic_similarity/    # Rules needed for computing syntactic similarity using simLP.
-            └── exp4/           # Experiment 4
-                ├── predictive_accuracy/     # Rules needed for reasoning and computing predictive accuracy using RTEC.
-                └── syntactic_similarity/    # Rules needed for computing syntactic similarity using simLP.
-            └── exp5/           # Experiment 5
-                ├── predictive_accuracy/     # Rules needed for reasoning and computing predictive accuracy using RTEC.
-                └── syntactic_similarity/    # Rules needed for computing syntactic similarity using simLP.
+            └── exp1/           
+                ├── predictive_accuracy/    
+                    ├── acr.prolog
+                    ├── ctm.prolog
+                    ├── msa.prolog
+                    ├── net.prolog
+                    └── vp.prolog
+                └── syntactic_similarity/   
+                    ├── acr.prolog
+                    ├── ctm.prolog
+                    ├── msa.prolog
+                    ├── net.prolog
+                    └── vp.prolog
+            └── exp2/           
+                ├── predictive_accuracy/    
+                    ├── acr.prolog
+                    ├── ctm.prolog
+                    ├── msa.prolog
+                    ├── net.prolog
+                    └── vp.prolog
+                └── syntactic_similarity/    
+                    ├── acr.prolog
+                    ├── ctm.prolog
+                    ├── msa.prolog
+                    ├── net.prolog
+                    └── vp.prolog
+            └── exp3/           
+                ├── predictive_accuracy/     
+                    ├── acr.prolog
+                    ├── ctm.prolog
+                    ├── msa.prolog
+                    ├── net.prolog
+                    └── vp.prolog
+                └── syntactic_similarity/    
+                    ├── acr.prolog
+                    ├── ctm.prolog
+                    ├── msa.prolog
+                    ├── net.prolog
+                    └── vp.prolog
+            └── exp4/           
+                ├── predictive_accuracy/     
+                    ├── acr.prolog
+                    ├── ctm.prolog
+                    ├── msa.prolog
+                    ├── net.prolog
+                    └── vp.prolog
+                └── syntactic_similarity/    
+                    ├── acr.prolog
+                    ├── ctm.prolog
+                    ├── msa.prolog
+                    ├── net.prolog
+                    └── vp.prolog
+            └── exp5/           
+                ├── predictive_accuracy/    
+                    ├── acr.prolog
+                    ├── ctm.prolog
+                    ├── msa.prolog
+                    ├── net.prolog
+                    └── vp.prolog
+                └── syntactic_similarity/   
+                    ├── acr.prolog
+                    ├── ctm.prolog
+                    ├── msa.prolog
+                    ├── net.prolog
+                    └── vp.prolog
