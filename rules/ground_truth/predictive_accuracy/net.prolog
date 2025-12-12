@@ -1,16 +1,3 @@
-/**************************************************************************
- * ACTIONS	                                                          *
- *                                                                        *
- * request_quote( consumer, merchant, goods_description                 ) *
- * present_quote( merchant, consumer, goods_description,  price         ) *
- * accept_quote(  consumer, merchant, goods_description		  ) 	  *
- * send_EPO(      consumer, iServer,  goods_description,  price         ) *
- * send_goods(    merchant, iServer,  goods_description,  goods, key    ) *
- **************************************************************************/
-
-/***********************
- * INSTITUTIONAL FACTS *
- ***********************/
 
 /***************
  *    quote    *
