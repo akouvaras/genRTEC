@@ -8,6 +8,10 @@ This program comes with ABSOLUTELY NO WARRANTY. This is free software, and you a
 
 For more information and feedback, do not hesitate adding an issue in this repository.
 
+# Instructions for reproducing the experiments
+
+
+
 ### Directory Structure
 ```bash
 .
@@ -21,9 +25,54 @@ For more information and feedback, do not hesitate adding an issue in this repos
 │   ├── 07_ctm.txt
 │   └── 08_cg.txt
 │
-└── rules/                      # Includes hand-crafted (folder: rtec) and LLM-generated rule sets (folder: llms)
-    └── llms/                   # Includes rule sets for Claude, Gemini, GPT, and Qwen
+└── rules/                      
+    └── ground_truth/                   # Includes ground-truth rules
+    └── llms/                   # Includes rule sets for Claude, Gemini, GPT
         └── claude/
-            └── exp1/           # Each experiment contains two folders: predictive_accuracy and syntactic_similarity
+            └── exp1/           # Experiment 1
+                ├── predictive_accuracy/     # Rules needed for reasoning and computing predictive accuracy using RTEC.
+                └── syntactic_similarity/    # Rules needed for computing syntactic similarity using simLP.
+            └── exp2/           # Experiment 2
+                ├── predictive_accuracy/     # Rules needed for reasoning and computing predictive accuracy using RTEC.
+                └── syntactic_similarity/    # Rules needed for computing syntactic similarity using simLP.
+            └── exp3/           # Experiment 3
+                ├── predictive_accuracy/     # Rules needed for reasoning and computing predictive accuracy using RTEC.
+                └── syntactic_similarity/    # Rules needed for computing syntactic similarity using simLP.
+            └── exp4/           # Experiment 4
+                ├── predictive_accuracy/     # Rules needed for reasoning and computing predictive accuracy using RTEC.
+                └── syntactic_similarity/    # Rules needed for computing syntactic similarity using simLP.
+            └── exp5/           # Experiment 5
+                ├── predictive_accuracy/     # Rules needed for reasoning and computing predictive accuracy using RTEC.
+                └── syntactic_similarity/    # Rules needed for computing syntactic similarity using simLP.
+        └── gemini/
+            └── exp1/           # Experiment 1
+                ├── predictive_accuracy/     # Rules needed for reasoning and computing predictive accuracy using RTEC.
+                └── syntactic_similarity/    # Rules needed for computing syntactic similarity using simLP.
+            └── exp2/           # Experiment 2
+                ├── predictive_accuracy/     # Rules needed for reasoning and computing predictive accuracy using RTEC.
+                └── syntactic_similarity/    # Rules needed for computing syntactic similarity using simLP.
+            └── exp3/           # Experiment 3
+                ├── predictive_accuracy/     # Rules needed for reasoning and computing predictive accuracy using RTEC.
+                └── syntactic_similarity/    # Rules needed for computing syntactic similarity using simLP.
+            └── exp4/           # Experiment 4
+                ├── predictive_accuracy/     # Rules needed for reasoning and computing predictive accuracy using RTEC.
+                └── syntactic_similarity/    # Rules needed for computing syntactic similarity using simLP.
+            └── exp5/           # Experiment 5
+                ├── predictive_accuracy/     # Rules needed for reasoning and computing predictive accuracy using RTEC.
+                └── syntactic_similarity/    # Rules needed for computing syntactic similarity using simLP.
+        └── gpt/
+            └── exp1/           # Experiment 1
+                ├── predictive_accuracy/     # Rules needed for reasoning and computing predictive accuracy using RTEC.
+                └── syntactic_similarity/    # Rules needed for computing syntactic similarity using simLP.
+            └── exp2/           # Experiment 2
+                ├── predictive_accuracy/     # Rules needed for reasoning and computing predictive accuracy using RTEC.
+                └── syntactic_similarity/    # Rules needed for computing syntactic similarity using simLP.
+            └── exp3/           # Experiment 3
+                ├── predictive_accuracy/     # Rules needed for reasoning and computing predictive accuracy using RTEC.
+                └── syntactic_similarity/    # Rules needed for computing syntactic similarity using simLP.
+            └── exp4/           # Experiment 4
+                ├── predictive_accuracy/     # Rules needed for reasoning and computing predictive accuracy using RTEC.
+                └── syntactic_similarity/    # Rules needed for computing syntactic similarity using simLP.
+            └── exp5/           # Experiment 5
                 ├── predictive_accuracy/     # Rules needed for reasoning and computing predictive accuracy using RTEC.
                 └── syntactic_similarity/    # Rules needed for computing syntactic similarity using simLP.
